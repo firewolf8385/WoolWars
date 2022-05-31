@@ -1,0 +1,31 @@
+Levels:
+  1:
+    NextLevelXP: 1000
+    Format: "&7[%level%✫]"
+  2:
+    NextLevelXP: 2000
+    Format: "&7[%level%✫]"
+  3:
+    NextLevelXP: 3000
+    Format: "&7[%level%✫]"
+  4:
+    NextLevelXP: 4000
+    Format: "&7[%level%✫]"
+  5:
+    NextLevelXP: 5000
+    Format: "&7[%level%✫]"
+  100:
+    NextLevelXP: 1000
+    Format: "&f[%level%✫]"
+  200:
+    NextLevelXP: 1000
+    Format: "&6[%level%✫]"
+  300:
+    NextLevelXP: 1000
+    Format: "&b[%level%✫]"
+  400:
+    NextLevelXP: 1000
+    Format: "&2[%level%✫]"
+  500:
+    NextLevelXP: 1000
+    Format: "&3[%level%✫]"
