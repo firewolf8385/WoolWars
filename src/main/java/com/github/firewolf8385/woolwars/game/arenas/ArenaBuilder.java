@@ -15,7 +15,6 @@ public class ArenaBuilder {
     private final WoolWars plugin;
     private final String id;
     private String name;
-    private final Collection<TeamColor> teams = new HashSet<>();
     private final Map<TeamColor, Location> teamSpawns = new HashMap<>();
     private final Collection<Location> blocks = new HashSet<>();
     private Location waitingArea;
@@ -37,14 +36,6 @@ public class ArenaBuilder {
      */
     public void addBlock(Location location) {
         blocks.add(location);
-    }
-
-    /**
-     * Adds a team to the arena.
-     * @param team Team to add.
-     */
-    public void addTeam(TeamColor team) {
-        teams.add(team);
     }
 
     /**
@@ -78,14 +69,6 @@ public class ArenaBuilder {
      */
     public Map<TeamColor, Location> getSpawns() {
         return teamSpawns;
-    }
-
-    /**
-     * Gets all teams set to the arena.
-     * @return A collection of all teams.
-     */
-    public Collection<TeamColor> getTeams() {
-        return teams;
     }
 
     /**
@@ -133,43 +116,49 @@ public class ArenaBuilder {
      */
     public void save() {
         // Creates a spot for the new arena.
-        ConfigurationSection arenaSection = plugin.getSettingsManager().getArenas().getConfigurationSection("Arenas").createSection(id);
-        arenaSection.addDefault("Name", name);
-        arenaSection.addDefault("TeamSize", teamSize);
+        ConfigurationSection arenaSection;
+        if(plugin.getSettingsManager().getArenas().getConfigurationSection("Arenas") == null) {
+            arenaSection = plugin.getSettingsManager().getArenas().createSection("Arenas").createSection(id);
+        }
+        else {
+            arenaSection = plugin.getSettingsManager().getArenas().getConfigurationSection("Arenas").createSection(id);
+        }
+        arenaSection.set("Name", name);
+        arenaSection.set("TeamSize", teamSize);
 
         // Adds the Waiting Area location.
         ConfigurationSection waitingSection = arenaSection.createSection("Waiting");
-        waitingSection.addDefault("World", waitingArea.getWorld().getName());
-        waitingSection.addDefault("X", waitingArea.getX());
-        waitingSection.addDefault("Y", waitingArea.getY());
-        waitingSection.addDefault("Z", waitingArea.getZ());
-        waitingSection.addDefault("Yaw", waitingArea.getYaw());
-        waitingSection.addDefault("Pitch", waitingArea.getPitch());
+        waitingSection.set("World", waitingArea.getWorld().getName());
+        waitingSection.set("X", waitingArea.getX());
+        waitingSection.set("Y", waitingArea.getY());
+        waitingSection.set("Z", waitingArea.getZ());
+        waitingSection.set("Yaw", waitingArea.getYaw());
+        waitingSection.set("Pitch", waitingArea.getPitch());
 
         // Adds all the team colors.
         ConfigurationSection teamsSection = arenaSection.createSection("Teams");
-        for(TeamColor team : teams) {
+        for(TeamColor team : teamSpawns.keySet()) {
             ConfigurationSection teamSection = teamsSection.createSection(team.toString());
-            teamSection.addDefault("World", teamSpawns.get(team).getWorld().getName());
-            teamSection.addDefault("X", teamSpawns.get(team).getX());
-            teamSection.addDefault("Y", teamSpawns.get(team).getY());
-            teamSection.addDefault("Z", teamSpawns.get(team).getZ());
-            teamSection.addDefault("Yaw", teamSpawns.get(team).getYaw());
-            teamSection.addDefault("Pitch", teamSpawns.get(team).getPitch());
+            teamSection.set("World", teamSpawns.get(team).getWorld().getName());
+            teamSection.set("X", teamSpawns.get(team).getX());
+            teamSection.set("Y", teamSpawns.get(team).getY());
+            teamSection.set("Z", teamSpawns.get(team).getZ());
+            teamSection.set("Yaw", teamSpawns.get(team).getYaw());
+            teamSection.set("Pitch", teamSpawns.get(team).getPitch());
         }
 
         // Adds the block locations.
-        ConfigurationSection blocksSection = arenaSection.createSection("blocks");
+        ConfigurationSection blocksSection = arenaSection.createSection("Blocks");
         int count = 0;
         for(Location location : blocks) {
             count++;
             ConfigurationSection blockSection = blocksSection.createSection(count + "");
-            blockSection.addDefault("World", location.getWorld().getName());
-            blockSection.addDefault("X", location.getX());
-            blockSection.addDefault("Y", location.getY());
-            blockSection.addDefault("Z", location.getZ());
-            blockSection.addDefault("Yaw", location.getYaw());
-            blockSection.addDefault("Pitch", location.getPitch());
+            blockSection.set("World", location.getWorld().getName());
+            blockSection.set("X", location.getX());
+            blockSection.set("Y", location.getY());
+            blockSection.set("Z", location.getZ());
+            blockSection.set("Yaw", location.getYaw());
+            blockSection.set("Pitch", location.getPitch());
         }
 
         // Saves and updates arenas.yml

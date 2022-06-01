@@ -11,7 +11,7 @@ import java.util.HashSet;
  */
 public class ArenaManager {
     private final WoolWars plugin;
-    private final Collection<Arena> openArenas = new HashSet<>();
+    private final Collection<Arena> arenas = new HashSet<>();
     private ArenaBuilder arenaBuilder;
 
     /**
@@ -40,8 +40,8 @@ public class ArenaManager {
      * Gets all arenas currently available.
      * @return All currently open arenas.
      */
-    public Collection<Arena> getOpenArenas() {
-        return openArenas;
+    public Collection<Arena> getArenas() {
+        return arenas;
     }
 
     /**
@@ -49,7 +49,7 @@ public class ArenaManager {
      * @param name Name of the arena.
      */
     public void loadArena(String name) {
-        openArenas.add(new Arena(plugin, name));
+        arenas.add(new Arena(plugin, name));
     }
 
     /**

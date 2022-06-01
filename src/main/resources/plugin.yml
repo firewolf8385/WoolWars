@@ -9,6 +9,8 @@ depend:
   - PlaceholderAPI
 
 commands:
+  arena:
+    description: Command for setting up arenas.
   party:
     description: Main party command.
     aliases: [p]
