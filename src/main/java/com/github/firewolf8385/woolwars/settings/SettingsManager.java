@@ -43,7 +43,7 @@ public class SettingsManager {
         levalsFile = new File(plugin.getDataFolder(), "levels.yml");
         levels = YamlConfiguration.loadConfiguration(levalsFile);
         if(!levalsFile.exists()) {
-            plugin.saveResource("levals.yml", false);
+            plugin.saveResource("levels.yml", false);
         }
 
         messagesFile = new File(plugin.getDataFolder(), "messages.yml");
