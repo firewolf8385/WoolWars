@@ -17,6 +17,10 @@ public class WoolPlayerManager {
         players.put(player.getUniqueId(), new WoolPlayer(plugin, player.getUniqueId()));
     }
 
+    public WoolPlayer getPlayer(Player player) {
+        return players.get(player.getUniqueId());
+    }
+
     public List<WoolPlayer> getPlayers() {
         return new ArrayList<>(players.values());
     }
