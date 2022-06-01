@@ -33,6 +33,24 @@ public class ItemBuilder {
     }
 
     /**
+     * Create a new ItemStack with XMaterial.
+     * @param xMaterial XMaterial to use.
+     */
+    public ItemBuilder(XMaterial xMaterial) {
+        this(xMaterial, 1);
+    }
+
+    /**
+     * Create a new ItemStack with XMaterial and a specified amount.
+     * @param xMaterial XMaterial to use.
+     * @param amount Amount of the item.
+     */
+    public ItemBuilder(XMaterial xMaterial, int amount) {
+        item = xMaterial.parseItem();
+        item.setAmount(amount);
+    }
+
+    /**
      * Start a builder with an existing ItemStack
      * @param item ItemStack
      */
