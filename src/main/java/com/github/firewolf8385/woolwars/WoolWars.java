@@ -1,5 +1,6 @@
 package com.github.firewolf8385.woolwars;
 
+import com.github.firewolf8385.woolwars.commands.AbstractCommand;
 import com.github.firewolf8385.woolwars.listeners.PlayerJoinListener;
 import com.github.firewolf8385.woolwars.listeners.PlayerQuitListener;
 import com.github.firewolf8385.woolwars.players.WoolPlayerManager;
@@ -27,6 +28,9 @@ public final class WoolWars extends JavaPlugin {
         // Registers listeners.
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), this);
+
+        // Register commands.
+        AbstractCommand.registerCommands(this);
 
         // Update scoreboard
         new ScoreboardUpdate(this).runTaskTimer(this, 20L, 20L);

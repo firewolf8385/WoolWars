@@ -7,3 +7,8 @@ description: Fun Team Based Minigame Based Off Hypixel's Wool Wars
 
 depend:
   - PlaceholderAPI
+
+commands:
+  woolwars:
+    description: Main Wool Wars command.
+    aliases: [ww]
