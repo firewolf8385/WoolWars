@@ -37,8 +37,8 @@ public class LobbyScoreboard extends CustomScoreboard {
         helper.setSlot(9, "");
         helper.setSlot(8, "&fLevel: " + LevelUtils.getFormattedLevel(woolPlayer.getLevel()));
         helper.setSlot(7, "");
-        helper.setSlot(6, "&fProgress: &b0&7/&a5k");
-        helper.setSlot(5, " &8[&7■■■■■■■■■■&8]");
+        helper.setSlot(6, "&fProgress: &b" + LevelUtils.getFormattedExperience(woolPlayer.getExperience()) + "&7/&a" + LevelUtils.getFormattedRequiredExperience(woolPlayer.getLevel()));
+        helper.setSlot(5, " " + LevelUtils.getSmallLevelBar(woolPlayer.getExperience(), woolPlayer.getLevel()));
         helper.setSlot(4, "");
         helper.setSlot(3, "&fCoins: " + "&6" + woolPlayer.getCoins());
         helper.setSlot(2, "");
