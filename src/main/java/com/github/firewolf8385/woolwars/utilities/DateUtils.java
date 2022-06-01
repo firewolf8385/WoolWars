@@ -18,6 +18,9 @@ public class DateUtils {
         dateString += "/";
 
         // Adds the day to the formatted string.
+        if(currentdate.getDayOfMonth() < 10) {
+            dateString += "0";
+        }
         dateString += currentdate.getDayOfMonth();
         dateString += "/";
 
