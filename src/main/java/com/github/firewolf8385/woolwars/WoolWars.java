@@ -1,8 +1,10 @@
 package com.github.firewolf8385.woolwars;
 
 import com.github.firewolf8385.woolwars.commands.AbstractCommand;
+import com.github.firewolf8385.woolwars.listeners.PlayerChatListener;
 import com.github.firewolf8385.woolwars.listeners.PlayerJoinListener;
 import com.github.firewolf8385.woolwars.listeners.PlayerQuitListener;
+import com.github.firewolf8385.woolwars.party.PartyManager;
 import com.github.firewolf8385.woolwars.players.WoolPlayerManager;
 import com.github.firewolf8385.woolwars.settings.SettingsManager;
 import com.github.firewolf8385.woolwars.utilities.LevelUtils;
@@ -13,10 +15,12 @@ import org.bukkit.plugin.java.JavaPlugin;
 public final class WoolWars extends JavaPlugin {
     private final SettingsManager settingsManager;
     private final WoolPlayerManager woolPlayerManager;
+    private final PartyManager partyManager;
 
     public WoolWars() {
         settingsManager = new SettingsManager(this);
         woolPlayerManager = new WoolPlayerManager(this);
+        partyManager = new PartyManager(this);
     }
 
     @Override
@@ -26,6 +30,7 @@ public final class WoolWars extends JavaPlugin {
         new LevelUtils(this);
 
         // Registers listeners.
+        Bukkit.getPluginManager().registerEvents(new PlayerChatListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerQuitListener(this), this);
 
@@ -51,5 +56,9 @@ public final class WoolWars extends JavaPlugin {
 
     public WoolPlayerManager getWoolPlayerManager() {
         return woolPlayerManager;
+    }
+
+    public PartyManager getPartyManager() {
+        return partyManager;
     }
 }

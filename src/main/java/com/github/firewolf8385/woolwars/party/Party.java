@@ -27,19 +27,27 @@ public class Party {
     }
 
     /**
+     * Add a player to the party.
+     * @param player Player to add.
+     */
+    public void addPlayer(Player player) {
+        members.put(player.getUniqueId(), PartyRank.MEMBER);
+        invites.remove(player.getUniqueId());
+    }
+
+    /**
      * Invites a player to the party.
      * @param player Player being invited to the party.
      */
     public void invitePlayer(Player player) {
         invites.put(player.getUniqueId(), player.getName());
-        sendMessage("&f" + player.getName() + " &ahas been invited to the party.");
 
         plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             if(!invites.keySet().contains(player.getUniqueId())) {
                return;
             }
 
-            sendMessage("&f" + invites.get(player.getUniqueId()) + "&a'/s invite has expired.");
+            sendMessage("&a&lParty &8» &f" + invites.get(player.getUniqueId()) + "&a's invite has expired.");
             invites.remove(player.getUniqueId());
         }, 20*60);
     }
@@ -100,6 +108,27 @@ public class Party {
     }
 
     /**
+     * Removes the invite to a player.
+     * @param player Player to remove invite to.
+     */
+    public void removeInvite(Player player) {
+        invites.remove(player.getUniqueId());
+    }
+
+    /**
+     * Removes a player from the party.
+     * @param player Player to remove.
+     */
+    public void removePlayer(Player player) {
+        if(getRank(player) == PartyRank.LEADER) {
+            plugin.getPartyManager().disbandParty(this);
+            return;
+        }
+
+        members.remove(player.getUniqueId());
+    }
+
+    /**
      * Sends a chat message to all party members
      * @param message Message to send to party members.
      */
@@ -107,6 +136,15 @@ public class Party {
         for(Player player : getMembers()) {
             ChatUtils.chat(player, message);
         }
+    }
+
+    /**
+     * Chance a player's rank in the party.
+     * @param player Player to change the rank of.
+     * @param rank Rank to set the player to.
+     */
+    public void setRank(Player player, PartyRank rank) {
+        members.put(player.getUniqueId(), rank);
     }
 
     /**

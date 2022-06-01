@@ -9,6 +9,12 @@ depend:
   - PlaceholderAPI
 
 commands:
+  party:
+    description: Main party command.
+    aliases: [p]
+  partychat:
+    description: Alias for /party chat.
+    aliases: [pc]
   woolwars:
     description: Main Wool Wars command.
     aliases: [ww]
