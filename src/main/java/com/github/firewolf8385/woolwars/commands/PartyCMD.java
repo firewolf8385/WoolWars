@@ -262,7 +262,7 @@ public class PartyCMD extends AbstractCommand {
     private void inviteCMD(Player player, String[] args) {
         // Makes sure the player has enterted a username to invite.
         if(args.length != 2) {
-            ChatUtils.chat(player, "&cUsage &8» /party invite [player]");
+            ChatUtils.chat(player, "&c&lUsage &8» &c/party invite [player]");
             return;
         }
 
