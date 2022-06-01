@@ -301,6 +301,12 @@ public class PartyCMD extends AbstractCommand {
         // Gets the player's party,
         Party party = plugin.getPartyManager().getParty(player);
 
+        // Makes sure the player has permission to invite someone to the party.
+        if(!(party.getRank(player) == PartyRank.LEADER || party.getRank(player) == PartyRank.MODERATOR)) {
+            ChatUtils.chat(player, "&cError &8» &cYou are not allowed to invite people to the party.");
+            return;
+        }
+
         // Makes sure the player wasn't already invited.
         if(party.getInvites().contains(target)) {
             ChatUtils.chat(player, "&cError &8» &cYou already have a pending invite to that person.");
