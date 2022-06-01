@@ -2,6 +2,7 @@ package com.github.firewolf8385.woolwars.listeners;
 
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.lobby.LobbyScoreboard;
+import com.github.firewolf8385.woolwars.utilities.LocationUtils;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -17,8 +18,12 @@ public class PlayerJoinListener implements Listener {
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
-
         plugin.getWoolPlayerManager().addPlayer(player);
+
+        // Teleport the player to the spawn if the spawn is set.
+        if(plugin.getSettingsManager().getConfig().getBoolean("Spawn.Set")) {
+            player.teleport(LocationUtils.getSpawn(plugin));
+        }
 
         new LobbyScoreboard(plugin, player);
     }

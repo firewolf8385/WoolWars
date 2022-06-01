@@ -2,8 +2,10 @@ package com.github.firewolf8385.woolwars.commands;
 
 
 import com.github.firewolf8385.woolwars.WoolWars;
+import com.github.firewolf8385.woolwars.utilities.LocationUtils;
 import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 public class WoolWarsCMD extends AbstractCommand {
     private final WoolWars plugin;
@@ -23,6 +25,9 @@ public class WoolWarsCMD extends AbstractCommand {
         switch (args[0]) {
             case "info":
                 infoCMD(sender);
+                break;
+            case "setspawn":
+                setSpawn(sender);
                 break;
             default:
                 helpCMD(sender);
@@ -47,5 +52,16 @@ public class WoolWarsCMD extends AbstractCommand {
         ChatUtils.chat(sender, "  &8» &e/admin");
         ChatUtils.chat(sender, "  &8» &e/arena");
         ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
+    }
+
+    private void setSpawn(CommandSender sender) {
+        if(!(sender instanceof Player)) {
+            ChatUtils.chat(sender, "&cOnly players can set the spawn location.");
+            return;
+        }
+
+        Player player = (Player) sender;
+        LocationUtils.setSpawn(plugin, player.getLocation());
+        ChatUtils.chat(player, "&aSpawn location has been set.");
     }
 }
