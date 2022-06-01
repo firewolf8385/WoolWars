@@ -13,6 +13,7 @@ import java.util.*;
 public class Party {
     private final WoolWars plugin;
     private final Map<UUID, PartyRank> members = new HashMap<>();
+    private final Set<UUID> partyChatToggled = new HashSet<>();
     private Set<UUID> invites;
 
     /**
@@ -56,12 +57,34 @@ public class Party {
     }
 
     /**
+     * Get if a player has party chat toggled.
+     * @param player Player to check.
+     * @return If they have party chat toggled.
+     */
+    public boolean hasPartyChatToggled(Player player) {
+        return partyChatToggled.contains(player.getUniqueId());
+    }
+
+    /**
      * Sends a chat message to all party members
      * @param message Message to send to party members.
      */
     public void sendMessage(String message) {
         for(Player player : getMembers()) {
             ChatUtils.chat(player, message);
+        }
+    }
+
+    /**
+     * Toggle party chat for a player.
+     * @param player Player to toggle party chat for.
+     */
+    public void togglePartyChat(Player player) {
+        if(!partyChatToggled.contains(player.getUniqueId())) {
+            partyChatToggled.add(player.getUniqueId());
+        }
+        else {
+            partyChatToggled.remove(player.getUniqueId());
         }
     }
 }
