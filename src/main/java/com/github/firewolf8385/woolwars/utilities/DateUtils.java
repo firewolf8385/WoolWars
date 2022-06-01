@@ -12,7 +12,7 @@ public class DateUtils {
 
         // Adds the month to the formatted string.
         if(currentdate.getMonthValue() < 10) {
-            dateString += " ";
+            dateString += "0";
         }
         dateString += currentdate.getMonthValue();
         dateString += "/";
