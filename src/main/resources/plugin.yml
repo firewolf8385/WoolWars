@@ -4,3 +4,6 @@ main: com.github.firewolf8385.woolwars.WoolWars
 api-version: 1.18
 authors: [ firewolf8385 ]
 description: Fun Team Based Minigame Based Off Hypixel's Wool Wars
+
+depend:
+  - PlaceholderAPI
