@@ -21,13 +21,16 @@ public final class WoolWars extends JavaPlugin {
         settingsManager = new SettingsManager(this);
         woolPlayerManager = new WoolPlayerManager(this);
         partyManager = new PartyManager(this);
+
+        // Registers utilities.
+        new LevelUtils(this);
     }
 
     @Override
     public void onEnable() {
 
-        // Registers utilities.
-        new LevelUtils(this);
+        // Enables bStats
+        new Metrics(this, 15361);
 
         // Registers listeners.
         Bukkit.getPluginManager().registerEvents(new PlayerChatListener(this), this);
