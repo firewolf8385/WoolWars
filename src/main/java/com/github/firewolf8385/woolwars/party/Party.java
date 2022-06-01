@@ -14,7 +14,7 @@ public class Party {
     private final WoolWars plugin;
     private final Map<UUID, PartyRank> members = new HashMap<>();
     private final Set<UUID> partyChatToggled = new HashSet<>();
-    private Set<UUID> invites;
+    private final Map<UUID, String> invites = new HashMap<>();
 
     /**
      * Creates the party object.
@@ -24,6 +24,40 @@ public class Party {
     public Party(WoolWars plugin, Player leader) {
         this.plugin = plugin;
         members.put(leader.getUniqueId(), PartyRank.LEADER);
+    }
+
+    /**
+     * Invites a player to the party.
+     * @param player Player being invited to the party.
+     */
+    public void invitePlayer(Player player) {
+        invites.put(player.getUniqueId(), player.getName());
+        sendMessage("&f" + player.getName() + " &ahas been invited to the party.");
+
+        plugin.getServer().getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+            if(!invites.keySet().contains(player.getUniqueId())) {
+               return;
+            }
+
+            sendMessage("&f" + invites.get(player.getUniqueId()) + "&a'/s invite has expired.");
+            invites.remove(player.getUniqueId());
+        }, 20*60);
+    }
+
+    /**
+     * Get all current invites.
+     * @return All current invites.
+     */
+    public Collection<Player> getInvites() {
+        Collection<Player> partyInvites = new ArrayList<>();
+
+        invites.keySet().forEach(uuid -> {
+            if(Bukkit.getPlayer(uuid) != null) {
+                partyInvites.add(Bukkit.getPlayer(uuid));
+            }
+        });
+
+        return partyInvites;
     }
 
     /**
