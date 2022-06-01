@@ -22,8 +22,10 @@ public class LevelUtils {
         }
 
         for(String group : section.getKeys(false)) {
-            if(Integer.parseInt(group) >= level) {
-                formattedLevel = plugin.getSettingsManager().getLevels().getString("Levels." + group + ".Format").replace("%level%", level + "");
+            if(Integer.parseInt(group) <= level) {
+                formattedLevel = plugin.getSettingsManager().getLevels().getString("Levels." + group + ".Format")
+                        .replace("%level%", level + "")
+                        .replace("%star%", "✫");
             }
         }
 
