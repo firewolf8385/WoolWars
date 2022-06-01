@@ -5,6 +5,7 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 
 /**
  * Allows easy access to plugin configuration
@@ -13,7 +14,7 @@ import java.io.File;
 public class SettingsManager {
     private final FileConfiguration arenas;
     private final File arenasFile;
-    private final FileConfiguration config;
+    private FileConfiguration config;
     private final File configFile;
     private final FileConfiguration kits;
     private final File kitsFile;
@@ -91,5 +92,25 @@ public class SettingsManager {
      */
     public FileConfiguration getMessages() {
         return messages;
+    }
+
+    /**
+     * Allows us to save the config file after changes are made.
+     */
+    public void saveConfig() {
+        try {
+            config.save(configFile);
+        }
+        catch(IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
+     * This updates the config in case changes are made.
+     */
+    public void reloadConfig() {
+        saveConfig();
+        config = YamlConfiguration.loadConfiguration(configFile);
     }
 }
