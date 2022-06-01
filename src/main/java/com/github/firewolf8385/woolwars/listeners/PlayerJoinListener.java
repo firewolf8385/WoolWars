@@ -18,6 +18,8 @@ public class PlayerJoinListener implements Listener {
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
 
+        plugin.getWoolPlayerManager().addPlayer(player);
+
         new LobbyScoreboard(plugin, player);
     }
 }
