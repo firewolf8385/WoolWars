@@ -30,6 +30,15 @@ public final class WoolWars extends JavaPlugin {
 
         // Update scoreboard
         new ScoreboardUpdate(this).runTaskTimer(this, 20L, 20L);
+
+        // If PlaceholderAPI is installed, enables placeholders
+        if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
+            new Placeholders(this).register();
+        }
+        else {
+            Bukkit.getLogger().warning("WoolWars requires PlaceholderAPI to be installed..");
+            getServer().getPluginManager().disablePlugin(this);
+        }
     }
 
     public SettingsManager getSettingsManager() {
