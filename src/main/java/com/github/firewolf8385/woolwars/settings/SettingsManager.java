@@ -12,7 +12,7 @@ import java.io.IOException;
  * files. Stores spawn and arena locations.
  */
 public class SettingsManager {
-    private final FileConfiguration arenas;
+    private FileConfiguration arenas;
     private final File arenasFile;
     private FileConfiguration config;
     private final File configFile;
@@ -95,6 +95,18 @@ public class SettingsManager {
     }
 
     /**
+     * Allows us to save the arenas file after changes are made.
+     */
+    public void saveArenas() {
+        try {
+            arenas.save(arenasFile);
+        }
+        catch (IOException exception) {
+            exception.printStackTrace();
+        }
+    }
+
+    /**
      * Allows us to save the config file after changes are made.
      */
     public void saveConfig() {
@@ -104,6 +116,14 @@ public class SettingsManager {
         catch(IOException exception) {
             exception.printStackTrace();
         }
+    }
+
+    /**
+     * Updates the arenas configuration in case changes are made.
+     */
+    public void reloadArenas() {
+        saveArenas();
+        arenas = YamlConfiguration.loadConfiguration(arenasFile);
     }
 
     /**

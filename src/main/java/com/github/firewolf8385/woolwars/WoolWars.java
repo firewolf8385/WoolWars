@@ -1,6 +1,7 @@
 package com.github.firewolf8385.woolwars;
 
 import com.github.firewolf8385.woolwars.commands.AbstractCommand;
+import com.github.firewolf8385.woolwars.game.arenas.ArenaManager;
 import com.github.firewolf8385.woolwars.listeners.PlayerChatListener;
 import com.github.firewolf8385.woolwars.listeners.PlayerJoinListener;
 import com.github.firewolf8385.woolwars.listeners.PlayerQuitListener;
@@ -13,6 +14,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WoolWars extends JavaPlugin {
+    private final ArenaManager arenaManager;
     private final SettingsManager settingsManager;
     private final WoolPlayerManager woolPlayerManager;
     private final PartyManager partyManager;
@@ -21,6 +23,7 @@ public final class WoolWars extends JavaPlugin {
         settingsManager = new SettingsManager(this);
         woolPlayerManager = new WoolPlayerManager(this);
         partyManager = new PartyManager(this);
+        arenaManager = new ArenaManager(this);
 
         // Registers utilities.
         new LevelUtils(this);
@@ -51,6 +54,10 @@ public final class WoolWars extends JavaPlugin {
             Bukkit.getLogger().warning("WoolWars requires PlaceholderAPI to be installed..");
             getServer().getPluginManager().disablePlugin(this);
         }
+    }
+
+    public ArenaManager getArenaManager() {
+        return arenaManager;
     }
 
     public SettingsManager getSettingsManager() {
