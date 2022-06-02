@@ -1,7 +1,9 @@
 package com.github.firewolf8385.woolwars;
 
 import com.github.firewolf8385.woolwars.commands.AbstractCommand;
+import com.github.firewolf8385.woolwars.game.GameManager;
 import com.github.firewolf8385.woolwars.game.arenas.ArenaManager;
+import com.github.firewolf8385.woolwars.game.kits.KitManager;
 import com.github.firewolf8385.woolwars.listeners.BlockPlaceListener;
 import com.github.firewolf8385.woolwars.listeners.PlayerChatListener;
 import com.github.firewolf8385.woolwars.listeners.PlayerJoinListener;
@@ -15,23 +17,25 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class WoolWars extends JavaPlugin {
-    private final ArenaManager arenaManager;
-    private final SettingsManager settingsManager;
-    private final WoolPlayerManager woolPlayerManager;
-    private final PartyManager partyManager;
+    private ArenaManager arenaManager;
+    private GameManager gameManager;
+    private KitManager kitManager;
+    private SettingsManager settingsManager;
+    private WoolPlayerManager woolPlayerManager;
+    private PartyManager partyManager;
 
-    public WoolWars() {
+
+    @Override
+    public void onEnable() {
         settingsManager = new SettingsManager(this);
         woolPlayerManager = new WoolPlayerManager(this);
         partyManager = new PartyManager(this);
         arenaManager = new ArenaManager(this);
+        kitManager = new KitManager(this);
+        gameManager = new GameManager(this);
 
         // Registers utilities.
         new LevelUtils(this);
-    }
-
-    @Override
-    public void onEnable() {
 
         // Enables bStats
         new Metrics(this, 15361);
@@ -60,6 +64,14 @@ public final class WoolWars extends JavaPlugin {
 
     public ArenaManager getArenaManager() {
         return arenaManager;
+    }
+
+    public GameManager getGameManager() {
+        return gameManager;
+    }
+
+    public KitManager getKitManager() {
+        return kitManager;
     }
 
     public SettingsManager getSettingsManager() {

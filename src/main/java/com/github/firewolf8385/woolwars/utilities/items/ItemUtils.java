@@ -24,7 +24,7 @@ public class ItemUtils {
         ItemBuilder builder = new ItemBuilder(xMaterial, amount);
 
         // Set the displayname
-        builder.setDisplayName(config.getString(path + ".DisplayName"));
+        if(config.isSet(path + ".DisplayName")) builder.setDisplayName(config.getString(path + ".DisplayName"));
 
         // Set the lore.
         for(String lore : config.getStringList(path + ".Lore")) {
@@ -42,9 +42,6 @@ public class ItemUtils {
                 builder.addEnchantment(enchantment, level);
             }
         }
-
-        // Set unbreakable
-        builder.setUnbreakable(config.getBoolean(path + ".Unbreakable"));
 
         // Returns the item.
         return builder.build();

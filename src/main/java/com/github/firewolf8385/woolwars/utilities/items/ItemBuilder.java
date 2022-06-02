@@ -50,6 +50,7 @@ public class ItemBuilder {
     public ItemBuilder(XMaterial xMaterial, int amount) {
         item = xMaterial.parseItem();
         item.setAmount(amount);
+        meta = item.getItemMeta();
     }
 
     /**

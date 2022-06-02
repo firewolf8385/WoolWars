@@ -67,6 +67,14 @@ public class Arena {
     }
 
     /**
+     * Gets the maximum numbers of players in the arena.
+     * @return Maximum amount of players.
+     */
+    public int getMaxPlayers() {
+        return (teamSize * spawns.size());
+    }
+
+    /**
      * Get the name of the arena.
      * @return Get the name of the arena.
      */
@@ -88,5 +96,13 @@ public class Arena {
      */
     public int getTeamSize() {
         return teamSize;
+    }
+
+    /**
+     * Get the spawn for the waiting area.
+     * @return Waiting area spawn.
+     */
+    public Location getWaitingArea() {
+        return waitingArea;
     }
 }

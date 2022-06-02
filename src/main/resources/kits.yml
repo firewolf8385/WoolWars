@@ -1,6 +1,26 @@
 Kits:
-  kit:
-    Name:
+  swordsman:
+    Name: Swordsman
     Icon:
-      # Item
+      Material: STONE_SWORD
+      DisplayName: "&aSwordsman"
+      Lore:
+        - "&7This is a test kit."
+        - "&7Remind me to update this to the"
+        - "&7real kit later on."
     Items:
+      0:
+        Material: STONE_SWORD
+      1:
+        Material: WOOD_PICKAXE
+      2:
+        Material: SHEERS
+      3:
+        Material: WOOL
+        Amount: 64
+      36:
+        Material: LEATHER_BOOTS
+        Unbreakable: true
+      37:
+        Material: LEATHER_LEGGINGS
+        Unbreakable: true

@@ -3,8 +3,7 @@ package com.github.firewolf8385.woolwars.game.arenas;
 import com.github.firewolf8385.woolwars.WoolWars;
 import org.bukkit.configuration.ConfigurationSection;
 
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Manages all existing arenas.
@@ -24,7 +23,10 @@ public class ArenaManager {
         // Loads existing arenas from arenas.yml.
         ConfigurationSection section = plugin.getSettingsManager().getArenas().getConfigurationSection("Arenas");
         if (section == null) return;
-        section.getKeys(false).forEach(this::loadArena);
+
+        for(String id : section.getKeys(false)) {
+            loadArena(id);
+        }
     }
 
     /**
@@ -46,10 +48,10 @@ public class ArenaManager {
 
     /**
      * Loads an arena from arenas.yml.
-     * @param name Name of the arena.
+     * @param id Name of the arena.
      */
-    public void loadArena(String name) {
-        arenas.add(new Arena(plugin, name));
+    public void loadArena(String id) {
+        arenas.add(new Arena(plugin, id));
     }
 
     /**

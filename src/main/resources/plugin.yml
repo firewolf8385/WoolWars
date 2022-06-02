@@ -17,6 +17,8 @@ commands:
   partychat:
     description: Alias for /party chat.
     aliases: [pc]
+  play:
+    description: Join a game.
   woolwars:
     description: Main Wool Wars command.
     aliases: [ww]

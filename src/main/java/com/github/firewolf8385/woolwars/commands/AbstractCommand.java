@@ -36,6 +36,7 @@ public abstract class AbstractCommand implements CommandExecutor {
         new ArenaCMD(pl);
         new PartyCMD(pl);
         new PartyChatCMD();
+        new PlayCMD(pl);
         new WoolWarsCMD(pl);
     }
 

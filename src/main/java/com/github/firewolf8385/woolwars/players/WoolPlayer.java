@@ -12,6 +12,7 @@ public class WoolPlayer {
     private int coins = 0;
     private int level = 1;
     private int experience = 0;
+    private String kit = "random";
 
     public WoolPlayer(WoolWars plugin, UUID playerUUID) {
         this.plugin = plugin;
@@ -24,6 +25,10 @@ public class WoolPlayer {
 
     public int getExperience() {
         return experience;
+    }
+
+    public String getKit() {
+        return kit;
     }
 
     public int getLevel() {

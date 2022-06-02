@@ -83,4 +83,17 @@ public class ChatUtils {
         }
         return ChatColor.translateAlternateColorCodes('&', message);
     }
+
+    /**
+     * Translate an array of strings.
+     * @param arr Strings
+     * @return array of translated strings.
+     */
+    public static String[] translate(String[] arr) {
+        for(int i = 0; i < arr.length; i++) {
+            arr[i] = translate(arr[i]);
+        }
+
+        return arr;
+    }
 }
