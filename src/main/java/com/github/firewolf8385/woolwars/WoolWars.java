@@ -4,10 +4,7 @@ import com.github.firewolf8385.woolwars.commands.AbstractCommand;
 import com.github.firewolf8385.woolwars.game.GameManager;
 import com.github.firewolf8385.woolwars.game.arenas.ArenaManager;
 import com.github.firewolf8385.woolwars.game.kits.KitManager;
-import com.github.firewolf8385.woolwars.listeners.BlockPlaceListener;
-import com.github.firewolf8385.woolwars.listeners.PlayerChatListener;
-import com.github.firewolf8385.woolwars.listeners.PlayerJoinListener;
-import com.github.firewolf8385.woolwars.listeners.PlayerQuitListener;
+import com.github.firewolf8385.woolwars.listeners.*;
 import com.github.firewolf8385.woolwars.party.PartyManager;
 import com.github.firewolf8385.woolwars.players.WoolPlayerManager;
 import com.github.firewolf8385.woolwars.settings.SettingsManager;
@@ -41,6 +38,7 @@ public final class WoolWars extends JavaPlugin {
         new Metrics(this, 15361);
 
         // Registers listeners.
+        Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerChatListener(this), this);
         Bukkit.getPluginManager().registerEvents(new PlayerJoinListener(this), this);
