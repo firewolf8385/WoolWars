@@ -2,10 +2,13 @@ package com.github.firewolf8385.woolwars.game;
 
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.arenas.Arena;
+import com.github.firewolf8385.woolwars.game.kits.Kit;
+import com.github.firewolf8385.woolwars.game.lobby.LobbyScoreboard;
 import com.github.firewolf8385.woolwars.game.teams.Team;
 import com.github.firewolf8385.woolwars.game.teams.TeamColor;
 import com.github.firewolf8385.woolwars.game.teams.TeamManager;
 import com.github.firewolf8385.woolwars.party.Party;
+import com.github.firewolf8385.woolwars.utilities.LocationUtils;
 import com.github.firewolf8385.woolwars.utilities.XSound;
 import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
 import com.github.firewolf8385.woolwars.utilities.items.XMaterial;
@@ -85,6 +88,11 @@ public class Game {
             team.getPlayers().forEach(player -> player.teleport(arena.getSpawns().get(team.getColor())));
         }
 
+        for(Player player : getPlayers()) {
+            Kit kit = plugin.getKitManager().getKit(plugin.getWoolPlayerManager().getPlayer(player).getKit());
+            kit.apply(player, this);
+        }
+
         BukkitRunnable roundCountdown = new  BukkitRunnable() {
             int counter = 15;
             public void run() {
@@ -102,7 +110,7 @@ public class Game {
                         player.playSound(player.getLocation(), XSound.BLOCK_NOTE_BLOCK_HAT.parseSound(), 1, 1);
                     }
                 }
-                else {
+                if(counter == 0) {
                     for(Player player : getPlayers()) {
                         player.playSound(player.getLocation(), XSound.BLOCK_NOTE_BLOCK_HAT.parseSound(), 1, 1);
                     }
@@ -122,6 +130,39 @@ public class Game {
      */
     private void runRound() {
 
+    }
+
+    private void endRound(Team winner) {
+        score.put(winner, score.get(winner) + 1);
+
+        if(teamManager.getTeams().size() == 1) {
+            endGame(winner);
+            return;
+        }
+
+        if(score.get(winner) >= 3) {
+            endGame(winner);
+            return;
+        }
+    }
+
+    private void endGame(Team winner) {
+        gameState = GameState.END;
+        sendMessage("&aGame Over");
+        sendMessage("&aWinner: " + winner.getColor().getChatColor() + winner.getColor().getName());
+
+        teamManager = new TeamManager();
+        score.clear();
+        round = 0;
+        gameCountdown = new GameCountdown(plugin, this);
+
+        for(Player player : getPlayers()) {
+            player.teleport(LocationUtils.getSpawn(plugin));
+            new LobbyScoreboard(plugin, player).update(player);
+        }
+
+        players.clear();
+        gameState = GameState.WAITING;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
@@ -153,7 +194,7 @@ public class Game {
         }
 
         // Checks if the game is at least 75% full.
-        if(getPlayers().size() >= (arena.getMaxPlayers()/4) && gameCountdown.getSeconds() == 30) {
+        if(getPlayers().size() >= ((arena.getMaxPlayers()/4) * 3) && gameCountdown.getSeconds() == 30) {
             // If so, starts the countdown.
             gameCountdown.start();
             gameState = GameState.COUNTDOWN;
@@ -199,11 +240,41 @@ public class Game {
         return round;
     }
 
+    public TeamManager getTeamManager() {
+        return teamManager;
+    }
+
+    public void playerDisconnect(Player player) {
+        removePlayer(player);
+
+        if(gameState == GameState.RUNNING) {
+            sendMessage("&a" + player.getName() + " disconnected");
+
+            Team team = teamManager.getTeam(player);
+            team.killPlayer(player);
+            team.removePlayer(player);
+
+            if(team.getPlayers().size() == 0) {
+                teamManager.removeTeam(team);
+            }
+
+            if(teamManager.getAliveTeams().size() == 1) {
+                List<Team> teams = new ArrayList<>(teamManager.getAliveTeams());
+                endRound(teams.get(0));
+            }
+        }
+    }
+
     public void removePlayer(Player player) {
         players.remove(player);
 
         if(gameState == GameState.WAITING || gameState == GameState.COUNTDOWN) {
             sendMessage("&f" + player.getName() + " &ahas left the game! (&f"+ players.size() + "&a/&f" + arena.getMaxPlayers() + "&a)");
+
+            if(getPlayers().size() < ((arena.getMaxPlayers()/4) * 3)) {
+                sendMessage("&cNot enough players! Countdown reset.");
+                gameCountdown = new GameCountdown(plugin, this);
+            }
         }
     }
 
