@@ -198,4 +198,14 @@ public class ItemBuilder {
         meta.setUnbreakable(unbreakable);
         return this;
     }
+
+    /**
+     * Changes the material to an XMaterial
+     * @param xMaterial XMaterial to set the ItemStack to.
+     * @return ItemBuilder.
+     */
+    public ItemBuilder setXMaterial(XMaterial xMaterial) {
+        item = xMaterial.parseItem();
+        return this;
+    }
 }
