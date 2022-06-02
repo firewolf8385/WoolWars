@@ -27,7 +27,6 @@ public class Game {
     private int round;
     private GameCountdown gameCountdown;
     private TeamManager teamManager;
-    private Map<Team, Integer> score = new HashMap<>();
 
     public Game(WoolWars plugin, Arena arena) {
         this.plugin = plugin;
@@ -60,8 +59,7 @@ public class Game {
         count = 0;
         List<TeamColor> colors = new ArrayList<>(arena.getSpawns().keySet());
         for(List<Player> team : teams) {
-            Team t = teamManager.createTeam(team, colors.get(count));
-            score.put(t, 0);
+            teamManager.createTeam(team, colors.get(count));
             count++;
         }
 
@@ -133,14 +131,14 @@ public class Game {
     }
 
     private void endRound(Team winner) {
-        score.put(winner, score.get(winner) + 1);
+        winner.addPoint();
 
         if(teamManager.getTeams().size() == 1) {
             endGame(winner);
             return;
         }
 
-        if(score.get(winner) >= 3) {
+        if(winner.getScore() >= 3) {
             endGame(winner);
             return;
         }
@@ -152,7 +150,6 @@ public class Game {
         sendMessage("&aWinner: " + winner.getColor().getChatColor() + winner.getColor().getName());
 
         teamManager = new TeamManager();
-        score.clear();
         round = 0;
         gameCountdown = new GameCountdown(plugin, this);
 
@@ -226,7 +223,7 @@ public class Game {
             Team team1 = teams.get(0);
             Team team2 = teams.get(1);
 
-            return ChatUtils.translate(team1.getColor().getChatColor() + String.valueOf(score.get(team1)) + " &7- " + team2.getColor().getChatColor() + String.valueOf(score.get(team2)));
+            return ChatUtils.translate(team1.getColor().getChatColor() + String.valueOf(team1.getScore()) + " &7- " + team2.getColor().getChatColor() + String.valueOf(team2.getScore()));
         }
 
         return "Coming Soon";

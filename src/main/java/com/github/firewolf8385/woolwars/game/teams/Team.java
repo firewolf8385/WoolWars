@@ -15,6 +15,7 @@ public class Team {
     private final Set<Player> alivePlayers;
     private final Set<Player> deadPlayers = new HashSet<>();
     private final TeamColor color;
+    private int score;
 
     /**
      * Creates a new team with specific players.
@@ -24,6 +25,15 @@ public class Team {
         this.players = players;
         this.alivePlayers = new HashSet<>(players);
         this.color = color;
+
+        score = 0;
+    }
+
+    /**
+     * Adds a point to the team's score.
+     */
+    public void addPoint() {
+        score++;
     }
 
     /**
@@ -56,6 +66,14 @@ public class Team {
      */
     public List<Player> getPlayers() {
         return players;
+    }
+
+    /**
+     * Gets the team's score.
+     * @return the team's score.
+     */
+    public int getScore() {
+        return score;
     }
 
     /**
