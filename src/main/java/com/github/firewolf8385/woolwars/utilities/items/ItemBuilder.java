@@ -152,6 +152,16 @@ public class ItemBuilder {
     }
 
     /**
+     * Set the amount of items in the ItemStack
+     * @param amount Amount to set.
+     * @return ItemBuilder
+     */
+    public ItemBuilder setAmount(int amount) {
+        item.setAmount(amount);
+        return this;
+    }
+
+    /**
      * Set the display name of the item.
      * @param str Display name
      * @return ItemBuilder
