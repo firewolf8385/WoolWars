@@ -3,14 +3,12 @@ package com.github.firewolf8385.woolwars.game.arenas;
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.teams.TeamColor;
 import com.github.firewolf8385.woolwars.utilities.LocationUtils;
+import com.github.firewolf8385.woolwars.utilities.items.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents an arena that a game is held in.
@@ -104,5 +102,18 @@ public class Arena {
      */
     public Location getWaitingArea() {
         return waitingArea;
+    }
+
+    /**
+     * Resets the arena.
+     */
+    public void reset() {
+        // Set the blocks to be broken.
+        for(Location location : blocks) {
+            List<XMaterial> materialList = Arrays.asList(XMaterial.SNOW_BLOCK, XMaterial.QUARTZ_BLOCK, XMaterial.WHITE_WOOL);
+            Collections.shuffle(materialList);
+
+            location.getWorld().getBlockAt(location).setType(materialList.get(0).parseMaterial());
+        }
     }
 }

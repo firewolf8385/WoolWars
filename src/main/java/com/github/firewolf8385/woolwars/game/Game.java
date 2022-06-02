@@ -74,13 +74,8 @@ public class Game {
             new GameScoreboard(plugin, player, this).update(player);
         }
 
-        // Set the blocks to be broken.
-        for(Location location : arena.getBlocks()) {
-            List<XMaterial> materialList = Arrays.asList(XMaterial.SNOW_BLOCK, XMaterial.QUARTZ_BLOCK, XMaterial.WHITE_WOOL);
-            Collections.shuffle(materialList);
-
-            location.getWorld().getBlockAt(location).setType(materialList.get(0).parseMaterial());
-        }
+        // Resets the arena.
+        arena.reset();
 
         for(Team team : teamManager.getTeams()) {
             team.getPlayers().forEach(player -> player.teleport(arena.getSpawns().get(team.getColor())));
@@ -156,6 +151,7 @@ public class Game {
         round = 0;
         gameCountdown = new GameCountdown(plugin, this);
 
+        arena.reset();
         for(Player player : getPlayers()) {
             player.teleport(LocationUtils.getSpawn(plugin));
             new LobbyScoreboard(plugin, player).update(player);
