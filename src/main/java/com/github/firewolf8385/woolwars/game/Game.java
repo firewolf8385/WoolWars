@@ -130,7 +130,7 @@ public class Game {
 
     }
 
-    private void endRound(Team winner) {
+    public void endRound(Team winner) {
         winner.addPoint();
 
         if(teamManager.getTeams().size() == 1) {
@@ -142,6 +142,9 @@ public class Game {
             endGame(winner);
             return;
         }
+
+        sendMessage("&aRound Over!");
+        startRound();
     }
 
     private void endGame(Team winner) {
