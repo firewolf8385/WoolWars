@@ -137,6 +137,12 @@ public class PartyCMD extends AbstractCommand {
             return;
         }
 
+        // Makes sure the player is not playing a game at the moment.
+        if(plugin.getGameManager().getGame(player) != null) {
+            ChatUtils.chat(player, "&cError &8» &cYou are already in a game.");
+            return;
+        }
+
         // Makes sure the player has an invitation to the party.
         if(!party.getInvites().contains(player)) {
             ChatUtils.chat(player, "&cError &8» &cYou do not have an invite to that party.");
@@ -159,8 +165,7 @@ public class PartyCMD extends AbstractCommand {
         }
 
         // Makes sure the player is not playing a game at the moment.
-        // TODO: Implement game system.
-        if(1 == 2) {
+        if(plugin.getGameManager().getGame(player) != null) {
             ChatUtils.chat(player, "&cError &8» &cYou are already in a game.");
             return;
         }
@@ -292,8 +297,7 @@ public class PartyCMD extends AbstractCommand {
         }
 
         // Makes sure the player is not in a game.
-        // TODO: Implement game system.
-        if(false) {
+        if(plugin.getGameManager().getGame(player) != null) {
             ChatUtils.chat(player, "&cError &8» &cThat person is currently in a game.");
             return;
         }
