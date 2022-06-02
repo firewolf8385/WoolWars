@@ -1,6 +1,7 @@
 package com.github.firewolf8385.woolwars.listeners;
 
 import com.github.firewolf8385.woolwars.WoolWars;
+import com.github.firewolf8385.woolwars.game.Game;
 import com.github.firewolf8385.woolwars.party.Party;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -24,6 +25,12 @@ public class PlayerQuitListener implements Listener {
         if(party != null) {
             party.sendMessage("&aParty &8» &f" + player.getName() + " &adisconnected.");
             party.removePlayer(player);
+        }
+
+        //
+        Game game = plugin.getGameManager().getGame(player);
+        if(game != null) {
+            game.playerDisconnect(player);
         }
     }
 }
