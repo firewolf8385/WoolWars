@@ -69,4 +69,13 @@ public class TeamManager {
     public void killTeam(Team team) {
         aliveTeams.remove(team);
     }
+
+    /**
+     * Removes a team from the game.
+     * @param team Team to remove.
+     */
+    public void removeTeam(Team team) {
+        teams.remove(team);
+        aliveTeams.remove(team);
+    }
 }
