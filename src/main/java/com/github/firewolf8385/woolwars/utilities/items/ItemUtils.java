@@ -19,6 +19,7 @@ public class ItemUtils {
     public static ItemStack fromConfig(FileConfiguration config, String path) {
         XMaterial xMaterial = XMaterial.matchXMaterial(config.getString(path + ".Material")).get();
         int amount = config.getInt(path + ".Amount");
+        if (amount == 0) amount = 1;
 
         // Creates the item builder.
         ItemBuilder builder = new ItemBuilder(xMaterial, amount);
