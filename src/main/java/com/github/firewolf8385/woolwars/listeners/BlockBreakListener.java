@@ -1,0 +1,32 @@
+package com.github.firewolf8385.woolwars.listeners;
+
+import com.github.firewolf8385.woolwars.WoolWars;
+import com.github.firewolf8385.woolwars.game.Game;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockBreakEvent;
+
+public class BlockBreakListener implements Listener {
+    private final WoolWars plugin;
+
+    public BlockBreakListener(WoolWars plugin) {
+        this.plugin = plugin;
+    }
+
+    @EventHandler
+    public void onBreak(BlockBreakEvent event) {
+        Player player = event.getPlayer();
+        Game game = plugin.getGameManager().getGame(player);
+
+        // Makes sure the player is in a game.
+        if(game == null) {
+            return;
+        }
+
+        // Cancels the event if the player is not placing in a scoring area.
+        if(!game.getArena().getBlocks().contains(event.getBlock().getLocation())) {
+            event.setCancelled(true);
+        }
+    }
+}
