@@ -261,6 +261,23 @@ public class Game {
         }
     }
 
+    public void playerKilled(Player player, Player killer) {
+        // Exit if they are already dead.
+        if(teamManager.getTeam(player).getDeadPlayers().contains(player)) {
+            return;
+        }
+
+        // Prevents stuff from breaking if the game is already over.
+        if(gameState == GameState.END) {
+            return;
+        }
+
+        teamManager.getTeam(player).killPlayer(player);
+        sendMessage("&a" + player.getName() + " was killed by " + killer.getName());
+
+        // TODO: Add player as a spectator
+    }
+
     public void removePlayer(Player player) {
         players.remove(player);
 

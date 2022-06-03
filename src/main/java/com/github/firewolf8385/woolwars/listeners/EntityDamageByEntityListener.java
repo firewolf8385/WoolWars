@@ -80,6 +80,13 @@ public class EntityDamageByEntityListener implements Listener {
             if(game.getTeamManager().getTeam(player) == game.getTeamManager().getTeam(damager)) {
                 event.setCancelled(true);
             }
+
+
+            if(event.getFinalDamage() >= player.getHealth()) {
+                event.setCancelled(true);
+
+                game.playerKilled(player, damager);
+            }
         }
     }
 }
