@@ -3,6 +3,7 @@ package com.github.firewolf8385.woolwars.listeners;
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.Game;
 import com.github.firewolf8385.woolwars.game.GameState;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -35,5 +36,9 @@ public class BlockBreakListener implements Listener {
         if(!game.getArena().getBlocks().contains(event.getBlock().getLocation())) {
             event.setCancelled(true);
         }
+
+        // Stop items from being dropped.
+        event.setCancelled(true);
+        event.getBlock().setType(Material.AIR);
     }
 }
