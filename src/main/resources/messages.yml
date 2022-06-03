@@ -1,0 +1,38 @@
+Commands:
+  Arena:
+    Error:
+      NoArenaBeingSetUp: "&cError &8» &cThere is no arena currently being set up."
+      ArenaAlreadySetUp: "&cError &8» &cThere is already an arena being set up."
+      MustCreateArenaFirst: "&cError &8» &cYou need to create an arena first! /arena create"
+      MustSetName: "&cError &8» &cYour arena needs a name first!"
+      MustSetTeamSize: "&cError &8» &cYou need to set a team size!"
+      MustSetWaitingArea: "&cError &8» &cYou need to set the waiting area spawn!"
+      MustSetTeams: "&cError &8» &cYour arena requires at least 2 teams!"
+      MustSetBlocks: "&cError &8» &cYour arena requires at least 1 block set!"
+      NotValidTeam: "&cError &8» &cThat is not a valid team. Valid teams are: red, &6orange, &eyellow, &agreen, &9blue, &5purple"
+  Party:
+    Chat:
+      Enabled: "&a&lParty &8» &aParty chat enabled."
+      Disabled: "&a&lParty &8» &aParty chat disabled."
+      Message: "&a&lParty &8» &f%player_name%&8: &a%message%"
+    Errors:
+      NotInAParty: "&cError &8» &cYou are not in a party! /party create."
+      AlreadyInAParty: "&cError &8» &cYou are already in a party."
+      AlreadyInAGame: "&cError &8» &cYou are already in a game."
+      PlayerNotOnline: "&cError &8» &cThat player is not online"
+      PlayerNotInAParty: "&cError &8» &cThat player is not in a party"
+      NoInvite: "&cError &8» &cYou do not have an invite to that party."
+      NoPermissionDisband: "&cError &8» &cOnly the party leader can disband the party!"
+      PlayerAlreadyInAParty: "&cError &8» &cThey are already in a party."
+      CannotInviteSelf: "&cError &8» &cYou cannot invite yourself."
+      PlayerAlreadyInAGame: "&cError &8» &cThat person is currently in a game."
+      NoPermissionInvite: "&cError &8» &cYou are not allowed to invite people to the party."
+      PendingInvite: "&cError &8» &cYou already have a pending invite to that person."
+      NoPermissionPromote: "&cError &8» &cOnly the party leader can promote members!"
+      NotInYourParty: "&cError &8» &cThat player is not in your party!"
+      AlreadyPartyLeader: "&cError &8» &cYou are already the party leader!"
+    Usage:
+      Accept: "&cUsage &8» &c/party accept [player]"
+      Decline: "&cUsage &8» &c/party decline [player]"
+      Invite: "&c&lUsage &8» &c/party invite [player]"
+      Promote: "&cUsage &8» &c/party promote [player]"
