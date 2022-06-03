@@ -11,9 +11,7 @@ import com.github.firewolf8385.woolwars.party.Party;
 import com.github.firewolf8385.woolwars.utilities.LocationUtils;
 import com.github.firewolf8385.woolwars.utilities.XSound;
 import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
-import com.github.firewolf8385.woolwars.utilities.items.XMaterial;
 import org.bukkit.Bukkit;
-import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -23,6 +21,7 @@ public class Game {
     private final WoolWars plugin;
     private final Arena arena;
     private final Collection<Player> players = new HashSet<>();
+    private final Collection<Player> spectators = new HashSet<>();
     private GameState gameState;
     private int round;
     private GameCountdown gameCountdown;
@@ -69,6 +68,8 @@ public class Game {
     public void startRound() {
         gameState = GameState.RUNNING;
         round++;
+
+        spectators.forEach(this::removeSpectator);
 
         for(Player player : players) {
             new GameScoreboard(plugin, player, this).update(player);
@@ -152,6 +153,9 @@ public class Game {
         gameCountdown = new GameCountdown(plugin, this);
 
         arena.reset();
+
+        spectators.forEach(this::removeSpectator);
+
         for(Player player : getPlayers()) {
             player.teleport(LocationUtils.getSpawn(plugin));
             new LobbyScoreboard(plugin, player).update(player);
@@ -200,6 +204,21 @@ public class Game {
         if(getPlayers().size() == arena.getMaxPlayers() && gameCountdown.getSeconds() > 5) {
             // If so, shortens the countdown to 5 seconds.
             gameCountdown.setSeconds(5);
+        }
+    }
+
+    public void addSpectator(Player player) {
+        spectators.add(player);
+
+        player.getInventory().clear();
+        player.getInventory().setArmorContents(null);
+        player.setAllowFlight(true);
+        player.setFlying(true);
+        player.setHealth(20.0);
+        player.setFoodLevel(20);
+
+        for(Player pl : getPlayers()) {
+            pl.hidePlayer(player);
         }
     }
 
@@ -275,7 +294,7 @@ public class Game {
         teamManager.getTeam(player).killPlayer(player);
         sendMessage("&a" + player.getName() + " was killed by " + killer.getName());
 
-        // TODO: Add player as a spectator
+        addSpectator(player);
     }
 
     public void removePlayer(Player player) {
@@ -288,6 +307,14 @@ public class Game {
                 sendMessage("&cNot enough players! Countdown reset.");
                 gameCountdown = new GameCountdown(plugin, this);
             }
+        }
+    }
+
+    public void removeSpectator(Player player) {
+        spectators.remove(player);
+
+        for(Player pl : Bukkit.getOnlinePlayers()) {
+            pl.showPlayer(player);
         }
     }
 
