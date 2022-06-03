@@ -2,6 +2,7 @@ package com.github.firewolf8385.woolwars.listeners;
 
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.Game;
+import com.github.firewolf8385.woolwars.game.GameState;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -21,6 +22,12 @@ public class BlockBreakListener implements Listener {
 
         // Makes sure the player is in a game.
         if(game == null) {
+            return;
+        }
+
+        // Cancels all block breaking if the game is not running.
+        if(game.getGameState() != GameState.RUNNING) {
+            event.setCancelled(true);
             return;
         }
 
