@@ -32,9 +32,16 @@ public class BlockBreakListener implements Listener {
             return;
         }
 
+        // Prevent spectators from breaking blocks.
+        if(game.getSpectators().contains(player)) {
+            event.setCancelled(true);
+            return;
+        }
+
         // Cancels the event if the player is not placing in a scoring area.
         if(!game.getArena().getBlocks().contains(event.getBlock().getLocation())) {
             event.setCancelled(true);
+            return;
         }
 
         // Stop items from being dropped.

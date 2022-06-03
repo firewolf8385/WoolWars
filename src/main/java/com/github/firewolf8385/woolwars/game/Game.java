@@ -255,6 +255,10 @@ public class Game {
         return round;
     }
 
+    public Collection<Player> getSpectators() {
+        return spectators;
+    }
+
     public TeamManager getTeamManager() {
         return teamManager;
     }
