@@ -40,6 +40,13 @@ public class Kit {
         player.getInventory().setLeggings(null);
         player.getInventory().setBoots(null);
 
+        // Resets health and food level.
+        player.setHealth(20);
+        player.setFoodLevel(20);
+
+        // Clear potion effects.
+        player.getActivePotionEffects().forEach(effect -> player.removePotionEffect(effect.getType()));
+
         Team team = game.getTeamManager().getTeam(player);
 
         for(int slot : items.keySet()) {
