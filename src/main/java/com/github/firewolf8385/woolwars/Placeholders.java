@@ -1,5 +1,6 @@
 package com.github.firewolf8385.woolwars;
 
+import com.github.firewolf8385.woolwars.game.Game;
 import com.github.firewolf8385.woolwars.players.WoolPlayer;
 import com.github.firewolf8385.woolwars.utilities.LevelUtils;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
@@ -88,11 +89,21 @@ class Placeholders extends PlaceholderExpansion {
 
     @Override
     public String onPlaceholderRequest(Player player, String identifier) {
-        // Coins
+        // Level
         if(identifier.equals("level")) {
             WoolPlayer woolPlayer = plugin.getWoolPlayerManager().getPlayer(player);
 
             return LevelUtils.getFormattedLevel(woolPlayer.getLevel());
+        }
+
+        if(identifier.equals("team_color")) {
+            Game game = plugin.getGameManager().getGame(player);
+
+            if(game == null) {
+                return "";
+            }
+
+            return game.getTeamManager().getTeam(player).getColor().getChatColor() + "";
         }
 
         return null;
