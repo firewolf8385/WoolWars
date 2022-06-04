@@ -38,6 +38,7 @@ public final class WoolWars extends JavaPlugin {
         new Metrics(this, 15361);
 
         // Registers listeners.
+        Bukkit.getPluginManager().registerEvents(new AsyncChatListener(this), this);
         Bukkit.getPluginManager().registerEvents(new EntityDamageByEntityListener(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockBreakListener(this), this);
         Bukkit.getPluginManager().registerEvents(new BlockPlaceListener(this), this);
