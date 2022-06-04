@@ -33,6 +33,7 @@ public abstract class AbstractCommand implements CommandExecutor {
     public static void registerCommands(WoolWars pl) {
         plugin = pl;
 
+        new AdminCMD(pl);
         new ArenaCMD(pl);
         new PartyCMD(pl);
         new PartyChatCMD();

@@ -9,6 +9,8 @@ depend:
   - PlaceholderAPI
 
 commands:
+  admin:
+    description: Admin commands for Wool Wars.
   arena:
     description: Command for setting up arenas.
   party:
