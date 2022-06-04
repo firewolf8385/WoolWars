@@ -106,6 +106,16 @@ class Placeholders extends PlaceholderExpansion {
             return game.getTeamManager().getTeam(player).getColor().getChatColor() + "";
         }
 
+        if(identifier.equals("team_abbreviation")) {
+            Game game = plugin.getGameManager().getGame(player);
+
+            if(game == null) {
+                return "";
+            }
+
+            return game.getTeamManager().getTeam(player).getColor().getChatColor() + "[" + game.getTeamManager().getTeam(player).getColor().getAbbreviation() + "}";
+        }
+
         return null;
     }
 }
