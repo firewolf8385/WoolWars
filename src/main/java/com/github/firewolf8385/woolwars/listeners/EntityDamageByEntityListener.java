@@ -79,8 +79,14 @@ public class EntityDamageByEntityListener implements Listener {
             // If they are in the same, cancels the event.
             if(game.getTeamManager().getTeam(player) == game.getTeamManager().getTeam(damager)) {
                 event.setCancelled(true);
+                return;
             }
 
+            // Cancels the event if the damager is a spectator.
+            if(game.getSpectators().contains(damager)) {
+                event.setCancelled(true);
+                return;
+            }
 
             if(event.getFinalDamage() >= player.getHealth()) {
                 event.setCancelled(true);
