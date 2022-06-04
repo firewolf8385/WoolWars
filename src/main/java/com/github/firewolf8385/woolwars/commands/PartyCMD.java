@@ -271,12 +271,6 @@ public class PartyCMD extends AbstractCommand {
             return;
         }
 
-        // Makes sure the player is in a party.
-        if(plugin.getPartyManager().getParty(player) == null) {
-            ChatUtils.chat(player, "&cError &8» &cYou are not in a party! /party create.");
-            return;
-        }
-
         // Makes sure the target is online.
         Player target = Bukkit.getPlayer(args[1]);
         if(target == null) {
@@ -300,6 +294,11 @@ public class PartyCMD extends AbstractCommand {
         if(plugin.getGameManager().getGame(player) != null) {
             ChatUtils.chat(player, "&cError &8» &cThat person is currently in a game.");
             return;
+        }
+
+        // Makes sure the player is in a party.
+        if(plugin.getPartyManager().getParty(player) == null) {
+            player.chat("/party create");
         }
 
         // Gets the player's party,
