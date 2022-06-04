@@ -3,6 +3,7 @@ package com.github.firewolf8385.woolwars.listeners;
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.Game;
 import com.github.firewolf8385.woolwars.game.teams.Team;
+import com.github.firewolf8385.woolwars.game.teams.TeamColor;
 import com.github.firewolf8385.woolwars.utilities.xseries.XBlock;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -57,13 +58,49 @@ public class BlockPlaceListener implements Listener {
             return;
         }
 
-        // Makes sure the placed block is sponge and that the sponge item is a wool generator.
-        if(event.getBlock().getType() != Material.SPONGE || !itemName.equals("Wool Generator")) {
-            return;
-        }
+        // Checks if the block placed is a special setup item.
+        switch (itemName) {
+            case "Wool Generator":
+                // Adds the location to the block list.
+                plugin.getArenaManager().getArenaBuilder().addBlock(event.getBlock().getLocation());
+                break;
+            case "Barrier":
+                // Makes sure the item is not a normal barrier.
+                if(item.getType() == Material.BARRIER) {
+                    return;
+                }
 
-        // Adds the location to the block list.
-        plugin.getArenaManager().getArenaBuilder().addBlock(event.getBlock().getLocation());
+                // Makes sure it has lore.
+                if(item.getItemMeta().getLore() == null) {
+                    return;
+                }
+
+                // Makes sure the lore isn't empty.
+                if(item.getItemMeta().getLore().size() == 0) {
+                    return;
+                }
+
+                // Gets the team.
+                String teamName = ChatColor.stripColor(item.getItemMeta().getLore().get(0));
+
+                // Makes sure the team is valid.
+                boolean valid = false;
+                for(TeamColor team : TeamColor.values()) {
+                    if(team.toString().equals(teamName.toUpperCase())) {
+                        valid = true;
+                    }
+                }
+
+                // Exists if the team is invalid.
+                if(!valid) {
+                    return;
+                }
+
+                // Adds the barrier to the arena builder.
+                TeamColor team = TeamColor.valueOf(teamName);
+                plugin.getArenaManager().getArenaBuilder().addBarrier(team, event.getBlock().getLocation());
+                break;
+        }
     }
 
     private void gamePlace(BlockPlaceEvent event) {

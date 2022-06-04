@@ -40,6 +40,9 @@ public class ArenaCMD extends AbstractCommand {
             case "finish":
                 finishCMD(player);
                 break;
+            case "setbarrier":
+                setBarrier(player, args);
+                break;
             case "setblocks":
                 setBlocksCMD(player);
                 break;
@@ -148,6 +151,12 @@ public class ArenaCMD extends AbstractCommand {
             return;
         }
 
+        // Makes sure each team has a barrier.
+        if(plugin.getArenaManager().getArenaBuilder().getSpawns().size() != plugin.getArenaManager().getArenaBuilder().getBarriers().size()) {
+            ChatUtils.chat(player, "&cError &8» &cNot all teams have both a spawn and a barrier!");
+            return;
+        }
+
         // Makes sure at least 1 block was set.
         if(plugin.getArenaManager().getArenaBuilder().getBlocks().size() < 1) {
             ChatUtils.chat(player, "&cError &8» &cYour arena requires at least 1 block set!");
@@ -161,6 +170,52 @@ public class ArenaCMD extends AbstractCommand {
 
     private void helpCMD(Player player) {
 
+    }
+
+    private void setBarrier(Player player, String[] args) {
+        // Makes sure there an arena is being set up.
+        if(plugin.getArenaManager().getArenaBuilder() == null) {
+            ChatUtils.chat(player, "&cError &8» &cYou need to create an arena first! /arena create");
+            return;
+        }
+
+        // Makes sure the command is being used properly.
+        if(args.length == 1) {
+            ChatUtils.chat(player, "&cUsage &8» &c/arena setbarrier [team]");
+            return;
+        }
+
+        // Gets the team from the command.
+        String teamString = args[1].toUpperCase();
+
+        // Makes sure the team is valid.
+        boolean valid = false;
+        for(TeamColor team : TeamColor.values()) {
+            if(team.toString().equals(teamString.toUpperCase())) {
+                valid = true;
+            }
+        }
+
+        if(!valid) {
+            ChatUtils.chat(player, "&cError &8» &cThat is not a valid team. Valid teams are: red, &6orange, &eyellow, &agreen, &9blue, &5purple");
+            return;
+        }
+
+        // Gets the team to add the barrier too.
+        TeamColor team = TeamColor.valueOf(teamString);
+
+        ItemBuilder barrier = new ItemBuilder(Material.GLASS)
+                .setDisplayName("&6Barrier")
+                .addLore(team.getChatColor() + "" + team);
+        player.getInventory().setItemInHand(barrier.build());
+
+        // Checks if enough spawns have been set.
+        if(plugin.getArenaManager().getArenaBuilder().getSpawns().size() < 2) {
+            ChatUtils.chat(player, "&a&lWoolWars &8» &aNow travel to another team's spawn and do it again.");
+            return;
+        }
+
+        ChatUtils.chat(player, "&a&lWoolWars &8» &aYou can add as many teams as you want. When you're done, setup the breakable blocks with &f/arena setblocks&a.");
     }
 
     private void setBlocksCMD(Player player) {
@@ -252,7 +307,7 @@ public class ArenaCMD extends AbstractCommand {
             return;
         }
 
-        ChatUtils.chat(player, "&a&lWoolWars &8» &aYou can add as many teams as you want. When you're done, setup the breakable blocks with &f/arena setblocks&a.");
+        ChatUtils.chat(player, "&a&lWoolWars &8» &aYou can add as many teams as you want. When you're done, setup the team barriers with &f/arena setbarrier [team]&a.");
     }
 
     /**

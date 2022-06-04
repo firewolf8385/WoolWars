@@ -16,6 +16,7 @@ public class ArenaBuilder {
     private final String id;
     private String name;
     private final Map<TeamColor, Location> teamSpawns = new HashMap<>();
+    private final Map<TeamColor, Collection<Location>> barriers = new HashMap<>();
     private final Collection<Location> blocks = new HashSet<>();
     private Location waitingArea;
     private int teamSize;
@@ -28,6 +29,22 @@ public class ArenaBuilder {
     public ArenaBuilder(WoolWars plugin, String id) {
         this.plugin = plugin;
         this.id = id;
+    }
+
+    /**
+     * Adds a block to a team's barrier.
+     * @param team Team to add barrier to.
+     * @param location Location of the block to add to the barrier.
+     */
+    public void addBarrier(TeamColor team, Location location) {
+        if(barriers.containsKey(team)) {
+            barriers.get(team).add(location);
+        }
+        else {
+            Collection<Location> barrier = new HashSet<>();
+            barrier.add(location);
+            barriers.put(team, barrier);
+        }
     }
 
     /**
@@ -45,6 +62,14 @@ public class ArenaBuilder {
      */
     public void addSpawn(TeamColor team, Location spawn) {
         teamSpawns.put(team, spawn);
+    }
+
+    /**
+     * Get a map of the barrier locations for each team.
+     * @return Barrier locations of each team.
+     */
+    public Map<TeamColor, Collection<Location>> getBarriers() {
+        return barriers;
     }
 
     /**
@@ -138,13 +163,27 @@ public class ArenaBuilder {
         // Adds all the team colors.
         ConfigurationSection teamsSection = arenaSection.createSection("Teams");
         for(TeamColor team : teamSpawns.keySet()) {
+            // Adds the team spawn.
             ConfigurationSection teamSection = teamsSection.createSection(team.toString());
-            teamSection.set("World", teamSpawns.get(team).getWorld().getName());
-            teamSection.set("X", teamSpawns.get(team).getX());
-            teamSection.set("Y", teamSpawns.get(team).getY());
-            teamSection.set("Z", teamSpawns.get(team).getZ());
-            teamSection.set("Yaw", teamSpawns.get(team).getYaw());
-            teamSection.set("Pitch", teamSpawns.get(team).getPitch());
+            ConfigurationSection spawnSection = teamSection.createSection("Spawn");
+            spawnSection.set("World", teamSpawns.get(team).getWorld().getName());
+            spawnSection.set("X", teamSpawns.get(team).getX());
+            spawnSection.set("Y", teamSpawns.get(team).getY());
+            spawnSection.set("Z", teamSpawns.get(team).getZ());
+            spawnSection.set("Yaw", teamSpawns.get(team).getYaw());
+            spawnSection.set("Pitch", teamSpawns.get(team).getPitch());
+
+            // Adds the team barriers.
+            ConfigurationSection barriersSection = teamSection.createSection("Barriers");
+            int count = 0;
+            for(Location location : barriers.get(team)) {
+                count++;
+                ConfigurationSection barrierSection = barriersSection.createSection(count + "");
+                barrierSection.set("World", location.getWorld().getName());
+                barrierSection.set("X", location.getX());
+                barrierSection.set("Y", location.getY());
+                barrierSection.set("Z", location.getZ());
+            }
         }
 
         // Adds the block locations.

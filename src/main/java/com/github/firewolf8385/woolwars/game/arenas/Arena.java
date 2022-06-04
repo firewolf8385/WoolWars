@@ -3,8 +3,10 @@ package com.github.firewolf8385.woolwars.game.arenas;
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.teams.TeamColor;
 import com.github.firewolf8385.woolwars.utilities.LocationUtils;
+import com.github.firewolf8385.woolwars.utilities.xseries.XBlock;
 import com.github.firewolf8385.woolwars.utilities.xseries.XMaterial;
 import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 
@@ -20,6 +22,7 @@ public class Arena {
     private final Location waitingArea;
     private final Map<TeamColor, Location> spawns = new HashMap<>();
     private final Collection<Location> blocks = new HashSet<>();
+    private final Map<TeamColor, Collection<Location>> barriers = new HashMap<>();
 
     /**
      * Creates the arena object.
@@ -36,16 +39,32 @@ public class Arena {
         waitingArea = LocationUtils.fromConfig(config, "Arenas." + id + ".Waiting");
 
         // Loads the teams and their spawns.
-        ConfigurationSection spawnsSection = config.getConfigurationSection("Arenas." + id + ".Teams");
-        spawnsSection.getKeys(false).forEach(teamName -> {
+        ConfigurationSection teamsSection = config.getConfigurationSection("Arenas." + id + ".Teams");
+        teamsSection.getKeys(false).forEach(teamName -> {
             TeamColor team = TeamColor.valueOf(teamName);
-            Location spawn = LocationUtils.fromConfig(config, "Arenas." + id + ".Teams." + teamName);
+
+            // Loads the team spawns.
+            Location spawn = LocationUtils.fromConfig(config, "Arenas." + id + ".Teams." + teamName + ".Spawn");
             spawns.put(team, spawn);
+
+            // Loads the team barriers.
+            ConfigurationSection barrierSection = config.getConfigurationSection("Arenas." + id + ".Teams." + teamName + ".Barriers");
+            Collection<Location> teamBarriers = new HashSet<>();
+            barrierSection.getKeys(false).forEach(barrier -> teamBarriers.add(LocationUtils.fromConfig(config, "Arenas." + id + ".Teams." + teamName + ".Barriers." + barrier)));
+            barriers.put(team, teamBarriers);
         });
 
         // Loads the block locations.
         ConfigurationSection blocksSection = config.getConfigurationSection("Arenas." + id + ".Blocks");
         blocksSection.getKeys(false).forEach(block -> blocks.add(LocationUtils.fromConfig(config, "Arenas." + id + ".Blocks." + block)));
+    }
+
+    /**
+     * Get a map of the barrier locations for each team.
+     * @return Barrier locations of each team.
+     */
+    public Map<TeamColor, Collection<Location>> getBarriers() {
+        return barriers;
     }
 
     /**
@@ -114,6 +133,13 @@ public class Arena {
             Collections.shuffle(materialList);
 
             location.getWorld().getBlockAt(location).setType(materialList.get(0).parseMaterial());
+        }
+
+        // Resets the barriers.
+        for(TeamColor teamColor :barriers.keySet()) {
+            for(Location location : barriers.get(teamColor)) {
+                XBlock.setType(location.getWorld().getBlockAt(location), XMaterial.GLASS_PANE);
+            }
         }
     }
 }

@@ -13,6 +13,8 @@ import com.github.firewolf8385.woolwars.utilities.xseries.Titles;
 import com.github.firewolf8385.woolwars.utilities.xseries.XSound;
 import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -127,6 +129,13 @@ public class Game {
     private void runRound() {
         for(Player player : getPlayers()) {
             Titles.sendTitle(player, ChatUtils.translate("&a&lROUND START"), ChatUtils.translate("&bRound " + round));
+        }
+
+        // Removes the barriers
+        for(TeamColor teamColor : arena.getBarriers().keySet()) {
+            for(Location location : arena.getBarriers().get(teamColor)) {
+                location.getWorld().getBlockAt(location).setType(Material.AIR);
+            }
         }
     }
 
