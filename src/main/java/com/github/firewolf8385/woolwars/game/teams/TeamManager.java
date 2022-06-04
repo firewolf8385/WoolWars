@@ -7,7 +7,7 @@ import java.util.Collection;
 import java.util.List;
 
 public class TeamManager {
-    private final Collection<Team> teams = new ArrayList<>();
+    private final List<Team> teams = new ArrayList<>();
     private final Collection<Team> aliveTeams = new ArrayList<>();
 
     /**
@@ -59,7 +59,7 @@ public class TeamManager {
      * Get all existing teams in the manager.
      * @return All existing teams.
      */
-    public Collection<Team> getTeams() {
+    public List<Team> getTeams() {
         return teams;
     }
 
