@@ -337,6 +337,10 @@ public class Game {
     public void removeSpectator(Player player) {
         spectators.remove(player);
 
+        // Stop the player from flying.
+        player.setFlying(false);
+        player.setAllowFlight(false);
+
         for(Player pl : Bukkit.getOnlinePlayers()) {
             pl.showPlayer(player);
         }
