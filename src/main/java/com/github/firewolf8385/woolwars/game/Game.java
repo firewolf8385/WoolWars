@@ -72,7 +72,7 @@ public class Game {
         gameState = GameState.RUNNING;
         round++;
 
-        spectators.forEach(this::removeSpectator);
+        new ArrayList<>(spectators).forEach(this::removeSpectator);
 
         for(Player player : players) {
             new GameScoreboard(plugin, player, this).update(player);
@@ -83,6 +83,7 @@ public class Game {
 
         for(Team team : teamManager.getTeams()) {
             team.getPlayers().forEach(player -> player.teleport(arena.getSpawns().get(team.getColor())));
+            team.reset();
         }
 
         for(Player player : getPlayers()) {
