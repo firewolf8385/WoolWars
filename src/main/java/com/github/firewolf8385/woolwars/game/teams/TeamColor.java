@@ -12,7 +12,7 @@ public enum TeamColor {
     RED(Color.RED, ChatColor.RED, "RED", XMaterial.RED_WOOL, DyeColor.RED, "R"),
     ORANGE(Color.ORANGE, ChatColor.GOLD, "ORANGE", XMaterial.ORANGE_WOOL, DyeColor.ORANGE, "O"),
     YELLOW(Color.YELLOW, ChatColor.YELLOW, "YELLOW", XMaterial.YELLOW_WOOL, DyeColor.YELLOW, "Y"),
-    GREEN(Color.LIME, ChatColor.GREEN, "GREEN", XMaterial.LIME_WOOL, DyeColor.GREEN, "G"),
+    GREEN(Color.LIME, ChatColor.GREEN, "GREEN", XMaterial.LIME_WOOL, DyeColor.LIME, "G"),
     BLUE(Color.BLUE, ChatColor.BLUE, "BLUE", XMaterial.BLUE_WOOL, DyeColor.BLUE, "B"),
     AQUA(Color.AQUA, ChatColor.AQUA, "AQUA", XMaterial.LIGHT_BLUE_WOOL, DyeColor.LIGHT_BLUE, "A"),
     PURPLE(Color.PURPLE, ChatColor.DARK_PURPLE, "PURPLE", XMaterial.PURPLE_WOOL, DyeColor.PURPLE, "P"),
