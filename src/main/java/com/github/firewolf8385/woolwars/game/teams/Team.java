@@ -95,4 +95,12 @@ public class Team {
         getAlivePlayers().remove(player);
         getDeadPlayers().remove(player);
     }
+
+    /**
+     * Clears dead players and resets alive players.
+     */
+    public void reset() {
+        alivePlayers.addAll(deadPlayers);
+        deadPlayers.clear();
+    }
 }
