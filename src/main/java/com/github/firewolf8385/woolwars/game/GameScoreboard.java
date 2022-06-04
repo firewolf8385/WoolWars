@@ -1,6 +1,7 @@
 package com.github.firewolf8385.woolwars.game;
 
 import com.github.firewolf8385.woolwars.WoolWars;
+import com.github.firewolf8385.woolwars.game.teams.Team;
 import com.github.firewolf8385.woolwars.utilities.DateUtils;
 import com.github.firewolf8385.woolwars.utilities.scoreboard.CustomScoreboard;
 import com.github.firewolf8385.woolwars.utilities.scoreboard.ScoreHelper;
@@ -51,12 +52,18 @@ public class GameScoreboard extends CustomScoreboard {
                 break;
             case RUNNING:
                 helper.setTitle("&e&lWOOL WARS");
-                helper.setSlot(8, "&7" + DateUtils.currentDateToString());
-                helper.setSlot(7, "");
-                helper.setSlot(6, "&fRound: &a" + game.getRound());
-                helper.setSlot(5, "&fMap: &a" + game.getArena().getName());
-                helper.setSlot(4, "");
-                helper.setSlot(3, "&fScore: " + game.getFormattedScore());
+                helper.setSlot(15, "&7" + DateUtils.currentDateToString());
+                helper.setSlot(14, "");
+                helper.setSlot(13, "&fRound: &a" + game.getRound());
+                helper.setSlot(12, "&fMap: &a" + game.getArena().getName());
+                helper.setSlot(11, "");
+
+                int slot = 10;
+                for(Team team : game.getTeamManager().getTeams()) {
+                    helper.setSlot(slot, game.getFormattedScore(team));
+                    slot--;
+                }
+
                 helper.setSlot(2, "");
                 helper.setSlot(1, "&ewww.spigotmc.org");
                 break;

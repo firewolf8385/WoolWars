@@ -238,17 +238,22 @@ public class Game {
         return gameState;
     }
 
-    public String getFormattedScore() {
-        if(teamManager.getTeams().size() == 2) {
-            List<Team> teams = new ArrayList<>(teamManager.getTeams());
+    public String getFormattedScore(Team team) {
+        String formattedScore = team.getColor().getChatColor() + "[" + team.getColor().getAbbreviation() + "] ";
 
-            Team team1 = teams.get(0);
-            Team team2 = teams.get(1);
-
-            return ChatUtils.translate(team1.getColor().getChatColor() + String.valueOf(team1.getScore()) + " &7- " + team2.getColor().getChatColor() + String.valueOf(team2.getScore()));
+        int count = 0;
+        for(int i = 0; i < team.getScore(); i++) {
+            formattedScore += "⬤";
+            count++;
         }
 
-        return "Coming Soon";
+        formattedScore += "&7";
+        for(int i = count; i < 3; i++) {
+            formattedScore += "⬤";
+        }
+
+        formattedScore += " &8(" + team.getScore() + "/3)";
+        return formattedScore;
     }
 
     public Collection<Player> getPlayers() {
