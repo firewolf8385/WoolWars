@@ -299,8 +299,9 @@ public class Game {
             return;
         }
 
-        teamManager.getTeam(player).killPlayer(player);
-        sendMessage("&a" + player.getName() + " was killed by " + killer.getName());
+        Team team = teamManager.getTeam(player);
+        team.killPlayer(player);
+        sendMessage(team.getColor().getChatColor() + player.getName() + " &7was killed by " + teamManager.getTeam(killer).getColor().getChatColor() + killer.getName());
 
         addSpectator(player);
     }
