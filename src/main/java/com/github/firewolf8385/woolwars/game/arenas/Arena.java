@@ -92,6 +92,16 @@ public class Arena {
     }
 
     /**
+     * Gets the minimum number of players required to start the game.
+     * @return Minumum number of players.
+     */
+    public double getMinPlayers() {
+        double max = getMaxPlayers();
+
+        return ((max/4.0) * 3.0) * 1;
+    }
+
+    /**
      * Get the name of the arena.
      * @return Get the name of the arena.
      */

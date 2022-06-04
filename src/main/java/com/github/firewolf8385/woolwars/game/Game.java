@@ -208,7 +208,7 @@ public class Game {
         }
 
         // Checks if the game is at least 75% full.
-        if(getPlayers().size() >= ((arena.getMaxPlayers()/4) * 3) && gameCountdown.getSeconds() == 30) {
+        if(getPlayers().size() >= arena.getMinPlayers() && gameCountdown.getSeconds() == 30) {
             // If so, starts the countdown.
             gameCountdown.start();
             gameState = GameState.COUNTDOWN;
