@@ -113,7 +113,7 @@ class Placeholders extends PlaceholderExpansion {
                 return "";
             }
 
-            return game.getTeamManager().getTeam(player).getColor().getChatColor() + "[" + game.getTeamManager().getTeam(player).getColor().getAbbreviation() + "}";
+            return game.getTeamManager().getTeam(player).getColor().getChatColor() + "[" + game.getTeamManager().getTeam(player).getColor().getAbbreviation() + "] ";
         }
 
         return null;
