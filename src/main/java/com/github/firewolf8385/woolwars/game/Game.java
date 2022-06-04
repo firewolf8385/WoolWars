@@ -29,6 +29,12 @@ public class Game {
     private int round;
     private GameCountdown gameCountdown;
     private TeamManager teamManager;
+    private final Map<Player, Integer> gameKills = new HashMap<>();
+    private final Map<Player, Integer> gameBlocksPlaced = new HashMap<>();
+    private final Map<Player, Integer> gameBlocksBroken = new HashMap<>();
+    private final Map<Player, Integer> roundKills = new HashMap<>();
+    private final Map<Player, Integer> roundBlocksBroken = new HashMap<>();
+    private final Map<Player, Integer> roundBlocksPlaced = new HashMap<>();
 
     public Game(WoolWars plugin, Arena arena) {
         this.plugin = plugin;
@@ -71,6 +77,10 @@ public class Game {
     public void startRound() {
         gameState = GameState.RUNNING;
         round++;
+
+        roundKills.clear();
+        roundBlocksBroken.clear();
+        roundBlocksPlaced.clear();
 
         new ArrayList<>(spectators).forEach(this::removeSpectator);
 
@@ -140,23 +150,45 @@ public class Game {
         }
     }
 
+    /**
+     * Ends the round.
+     * @param winner Winner of the round.
+     */
     public void endRound(Team winner) {
+        // Gives the winning team a point.
         winner.addPoint();
 
+        // Checks if there is only one team left.
         if(teamManager.getTeams().size() == 1) {
             endGame(winner);
             return;
         }
 
+        // Display round stats.
+        for(Player player : getPlayers()) {
+            ChatUtils.chat(player, "");
+            ChatUtils.centeredChat(player, "&aRound #" + round + " Stats");
+            ChatUtils.centeredChat(player, "&aKills &8- &f" + getRoundKills(player));
+            ChatUtils.centeredChat(player, "&aBlocks Broken &8- &f" + getRoundBlocksBroken(player));
+            ChatUtils.centeredChat(player, "&aBlocks Placed &8- &f" + getRoundBlocksPlaced(player));
+            ChatUtils.chat(player, "");
+        }
+
+        // Checks if a team has enough points to win.
         if(winner.getScore() >= 3) {
             endGame(winner);
             return;
         }
 
-        sendMessage("&aRound Over!");
+        // Starts next round.
+        //sendMessage("&aRound Over!");
         startRound();
     }
 
+    /**
+     * Ends the game.
+     * @param winner Winner of the game.
+     */
     private void endGame(Team winner) {
         gameState = GameState.END;
         sendMessage("&aGame Over");
@@ -173,13 +205,41 @@ public class Game {
         for(Player player : getPlayers()) {
             player.teleport(LocationUtils.getSpawn(plugin));
             new LobbyScoreboard(plugin, player).update(player);
+
+            ChatUtils.chat(player, "");
+            ChatUtils.centeredChat(player, "&aGame Stats");
+            ChatUtils.centeredChat(player, "&aKills &8- &f" + getGameKills(player));
+            ChatUtils.centeredChat(player, "&aBlocks Broken &8- &f" + getGameBlocksBroken(player));
+            ChatUtils.centeredChat(player, "&aBlocks Placed &8- &f" + getGameBlocksPlaced(player));
+            ChatUtils.centeredChat(player, "");
         }
 
         players.clear();
+        gameKills.clear();
+        gameBlocksBroken.clear();
+        gameBlocksPlaced.clear();
+        roundKills.clear();
+        roundBlocksBroken.clear();
+        roundBlocksPlaced.clear();
         gameState = GameState.WAITING;
     }
 
     // ----------------------------------------------------------------------------------------------------------------
+
+    public void addBlockBroken(Player player) {
+        gameBlocksBroken.merge(player, 1, Integer::sum);
+        roundBlocksBroken.merge(player, 1, Integer::sum);
+    }
+
+    public void addBlockPlaced(Player player) {
+        gameBlocksPlaced.merge(player, 1, Integer::sum);
+        roundBlocksPlaced.merge(player, 1, Integer::sum);
+    }
+
+    public void addKill(Player player) {
+        gameKills.merge(player, 1, Integer::sum);
+        roundKills.merge(player, 1, Integer::sum);
+    }
 
     /**
      * Adds a player to the game.
@@ -248,6 +308,18 @@ public class Game {
         return gameState;
     }
 
+    public int getGameKills(Player player) {
+        return gameKills.getOrDefault(player, 0);
+    }
+
+    public int getGameBlocksBroken(Player player) {
+        return gameBlocksBroken.getOrDefault(player, 0);
+    }
+
+    public int getGameBlocksPlaced(Player player) {
+        return gameBlocksPlaced.getOrDefault(player, 0);
+    }
+
     public String getFormattedScore(Team team) {
         String formattedScore = team.getColor().getChatColor() + "[" + team.getColor().getAbbreviation() + "] ";
 
@@ -272,6 +344,18 @@ public class Game {
 
     public int getRound() {
         return round;
+    }
+
+    public int getRoundKills(Player player) {
+        return roundKills.getOrDefault(player, 0);
+    }
+
+    public int getRoundBlocksBroken(Player player) {
+        return roundBlocksBroken.getOrDefault(player, 0);
+    }
+
+    public int getRoundBlocksPlaced(Player player) {
+        return roundBlocksPlaced.getOrDefault(player, 0);
     }
 
     public Collection<Player> getSpectators() {
@@ -319,6 +403,7 @@ public class Game {
         sendMessage(team.getColor().getChatColor() + player.getName() + " &7was killed by " + teamManager.getTeam(killer).getColor().getChatColor() + killer.getName());
 
         addSpectator(player);
+        addKill(killer);
     }
 
     public void removePlayer(Player player) {

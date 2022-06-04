@@ -47,5 +47,8 @@ public class BlockBreakListener implements Listener {
         // Stop items from being dropped.
         event.setCancelled(true);
         event.getBlock().setType(Material.AIR);
+
+        // Credit the player with a block broken.
+        game.addBlockBroken(player);
     }
 }

@@ -120,6 +120,9 @@ public class BlockPlaceListener implements Listener {
             return;
         }
 
+        // Credits them with a block placed.
+        game.addBlockPlaced(player);
+
         // Checks the area after the block is placed.
         Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
             // Gets the player's team.
