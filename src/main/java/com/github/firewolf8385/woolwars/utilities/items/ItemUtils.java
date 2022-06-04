@@ -1,5 +1,6 @@
 package com.github.firewolf8385.woolwars.utilities.items;
 
+import com.github.firewolf8385.woolwars.utilities.xseries.XMaterial;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.enchantments.Enchantment;

@@ -3,7 +3,7 @@ package com.github.firewolf8385.woolwars.game.arenas;
 import com.github.firewolf8385.woolwars.WoolWars;
 import com.github.firewolf8385.woolwars.game.teams.TeamColor;
 import com.github.firewolf8385.woolwars.utilities.LocationUtils;
-import com.github.firewolf8385.woolwars.utilities.items.XMaterial;
+import com.github.firewolf8385.woolwars.utilities.xseries.XMaterial;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;

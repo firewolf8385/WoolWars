@@ -1,6 +1,6 @@
 package com.github.firewolf8385.woolwars.game.teams;
 
-import com.github.firewolf8385.woolwars.utilities.items.XMaterial;
+import com.github.firewolf8385.woolwars.utilities.xseries.XMaterial;
 import org.bukkit.ChatColor;
 import org.bukkit.Color;
 import org.bukkit.DyeColor;

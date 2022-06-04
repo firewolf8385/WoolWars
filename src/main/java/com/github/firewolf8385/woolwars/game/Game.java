@@ -9,7 +9,7 @@ import com.github.firewolf8385.woolwars.game.teams.TeamColor;
 import com.github.firewolf8385.woolwars.game.teams.TeamManager;
 import com.github.firewolf8385.woolwars.party.Party;
 import com.github.firewolf8385.woolwars.utilities.LocationUtils;
-import com.github.firewolf8385.woolwars.utilities.XSound;
+import com.github.firewolf8385.woolwars.utilities.xseries.XSound;
 import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;

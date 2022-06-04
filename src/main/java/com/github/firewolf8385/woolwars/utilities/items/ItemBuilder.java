@@ -1,6 +1,7 @@
 package com.github.firewolf8385.woolwars.utilities.items;
 
 import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
+import com.github.firewolf8385.woolwars.utilities.xseries.XMaterial;
 import org.bukkit.Color;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;

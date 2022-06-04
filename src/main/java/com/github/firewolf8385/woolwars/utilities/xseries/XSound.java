@@ -1,4 +1,4 @@
-package com.github.firewolf8385.woolwars.utilities;
+package com.github.firewolf8385.woolwars.utilities.xseries;
 
 import com.google.common.base.Strings;
 import org.apache.commons.lang.StringUtils;

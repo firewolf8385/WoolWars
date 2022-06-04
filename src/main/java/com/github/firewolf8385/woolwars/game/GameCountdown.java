@@ -1,7 +1,7 @@
 package com.github.firewolf8385.woolwars.game;
 
 import com.github.firewolf8385.woolwars.WoolWars;
-import com.github.firewolf8385.woolwars.utilities.XSound;
+import com.github.firewolf8385.woolwars.utilities.xseries.XSound;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 

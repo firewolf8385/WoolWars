@@ -5,7 +5,7 @@ import com.github.firewolf8385.woolwars.game.Game;
 import com.github.firewolf8385.woolwars.game.teams.Team;
 import com.github.firewolf8385.woolwars.utilities.items.ItemBuilder;
 import com.github.firewolf8385.woolwars.utilities.items.ItemUtils;
-import com.github.firewolf8385.woolwars.utilities.items.XMaterial;
+import com.github.firewolf8385.woolwars.utilities.xseries.XMaterial;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
