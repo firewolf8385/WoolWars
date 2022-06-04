@@ -9,6 +9,7 @@ import com.github.firewolf8385.woolwars.game.teams.TeamColor;
 import com.github.firewolf8385.woolwars.game.teams.TeamManager;
 import com.github.firewolf8385.woolwars.party.Party;
 import com.github.firewolf8385.woolwars.utilities.LocationUtils;
+import com.github.firewolf8385.woolwars.utilities.xseries.Titles;
 import com.github.firewolf8385.woolwars.utilities.xseries.XSound;
 import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
 import org.bukkit.Bukkit;
@@ -85,6 +86,7 @@ public class Game {
         for(Player player : getPlayers()) {
             Kit kit = plugin.getKitManager().getKit(plugin.getWoolPlayerManager().getPlayer(player).getKit());
             kit.apply(player, this);
+            Titles.sendTitle(player, ChatUtils.translate("&e&lPRE ROUND"), ChatUtils.translate("&bSelect your class!"));
         }
 
         BukkitRunnable roundCountdown = new  BukkitRunnable() {
@@ -123,7 +125,9 @@ public class Game {
      * Runs the game countdown.
      */
     private void runRound() {
-
+        for(Player player : getPlayers()) {
+            Titles.sendTitle(player, ChatUtils.translate("&a&lROUND START"), ChatUtils.translate("&bRound " + round));
+        }
     }
 
     public void endRound(Team winner) {
