@@ -7,6 +7,9 @@ import com.github.firewolf8385.woolwars.utilities.chat.ChatUtils;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * This class runs the /woolwars command (/ww). Which displays various plugin information.
+ */
 public class WoolWarsCMD extends AbstractCommand {
     private final WoolWars plugin;
 
@@ -35,6 +38,10 @@ public class WoolWarsCMD extends AbstractCommand {
         }
     }
 
+    /**
+     * Runs the /ww info command, which displays plugin info.
+     * @param sender CommandSender who sent the command.
+     */
     private void infoCMD(CommandSender sender) {
         ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
         ChatUtils.centeredChat(sender, "&e&lWool Wars");
@@ -45,6 +52,10 @@ public class WoolWarsCMD extends AbstractCommand {
         ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
     }
 
+    /**
+     * Runs the /ww help command, which displays plugin commands.
+     * @param sender CommandSender who sent the command.
+     */
     private void helpCMD(CommandSender sender) {
         ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
         ChatUtils.centeredChat(sender, "&e&lWool Wars");
@@ -54,6 +65,10 @@ public class WoolWarsCMD extends AbstractCommand {
         ChatUtils.chat(sender, "&8&m+-----------------------***-----------------------+");
     }
 
+    /**
+     * Runs the /ww setspawn command, which sets the lobby spawn.
+     * @param sender CommandSender who sent the command.
+     */
     private void setSpawn(CommandSender sender) {
         if(!(sender instanceof Player)) {
             ChatUtils.chat(sender, "&cOnly players can set the spawn location.");

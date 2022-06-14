@@ -6,10 +6,17 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+/**
+ * Manages all active games.
+ */
 public class GameManager {
     private final WoolWars plugin;
     private final Collection<Game> games = new HashSet<>();
 
+    /**
+     * Creates the Game Manager and loads all available arenas.
+     * @param plugin Instance of the plugin.
+     */
     public GameManager(WoolWars plugin) {
         this.plugin = plugin;
 
@@ -62,6 +69,12 @@ public class GameManager {
         return possibleGames.get(0);
     }
 
+    /**
+     * Gets the game the player is currently in.
+     * If they are not in a game, returns null.
+     * @param player Player to get game of.
+     * @return Game they are in.
+     */
     public Game getGame(Player player) {
         for(Game game : games) {
             if(game.getPlayers().contains(player)) {

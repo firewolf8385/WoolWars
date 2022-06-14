@@ -8,13 +8,25 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 
+/**
+ * This class runs a listener that is called whenever a player joins.
+ * This teleports the player to spawn, reads and caches data from MySQL, and other tasks.
+ */
 public class PlayerJoinListener implements Listener {
-    private WoolWars plugin;
+    private final WoolWars plugin;
 
+    /**
+     * Creates the Listener.
+     * @param plugin Instance of the plugin.
+     */
     public PlayerJoinListener(WoolWars plugin) {
         this.plugin = plugin;
     }
 
+    /**
+     * Runs when the event is called.
+     * @param event PlayerJoinEvent
+     */
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
         Player player = event.getPlayer();
@@ -25,6 +37,7 @@ public class PlayerJoinListener implements Listener {
             player.teleport(LocationUtils.getSpawn(plugin));
         }
 
+        // Applies the Lobby Scoreboard to the player.
         new LobbyScoreboard(plugin, player);
     }
 }

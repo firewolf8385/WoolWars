@@ -8,12 +8,10 @@ import com.github.firewolf8385.woolwars.utilities.scoreboard.ScoreHelper;
 import org.bukkit.entity.Player;
 
 public class GameScoreboard extends CustomScoreboard {
-    private final WoolWars plugin;
     private final Game game;
 
     public GameScoreboard(WoolWars plugin, Player player, Game game) {
         super(player);
-        this.plugin = plugin;
         this.game = game;
 
         CustomScoreboard.getPlayers().put(player.getUniqueId(), this);

@@ -783,7 +783,7 @@ public final class XBlock {
             return LOOKUP.get(name);
         }
 
-        private enum Handling {COLORABLE, WOOD_SPECIES;}
+        private enum Handling {COLORABLE, WOOD_SPECIES}
     }
 
     /**

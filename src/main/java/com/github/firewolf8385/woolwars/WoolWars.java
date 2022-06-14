@@ -54,7 +54,7 @@ public final class WoolWars extends JavaPlugin {
         AbstractCommand.registerCommands(this);
 
         // Update scoreboard
-        new ScoreboardUpdate(this).runTaskTimer(this, 20L, 20L);
+        new ScoreboardUpdate().runTaskTimer(this, 20L, 20L);
 
         // If PlaceholderAPI is installed, enables placeholders
         if(Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {

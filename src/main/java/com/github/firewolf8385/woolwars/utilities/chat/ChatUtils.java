@@ -27,8 +27,10 @@ public class ChatUtils {
     public static void centeredChat(CommandSender sender, String message) {
         message = translate(message);
 
-        if(message == null || message.equals("")) sender.sendMessage("");
-        message = net.md_5.bungee.api.ChatColor.translateAlternateColorCodes('&', message);
+        if(message.equals("")) {
+            sender.sendMessage("");
+            return;
+        }
 
         int messagePxSize = 0;
         boolean previousCode = false;

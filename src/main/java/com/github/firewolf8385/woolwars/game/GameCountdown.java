@@ -9,7 +9,7 @@ public class GameCountdown {
     private final WoolWars plugin;
     private final BukkitRunnable task;
     private int seconds;
-    private Game game;
+    private final Game game;
 
     public GameCountdown(WoolWars plugin, Game game) {
         this.plugin = plugin;

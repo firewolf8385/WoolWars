@@ -8,7 +8,6 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public abstract class AbstractCommand implements CommandExecutor {
-    private final String commandName;
     private final String permission;
     private final boolean canConsoleUse;
     private static WoolWars plugin;
@@ -20,7 +19,6 @@ public abstract class AbstractCommand implements CommandExecutor {
      * @param canConsoleUse Whether or not console can use the command.
      */
     public AbstractCommand(final String commandName, final String permission, final boolean canConsoleUse) {
-        this.commandName = commandName;
         this.permission = permission;
         this.canConsoleUse = canConsoleUse;
         plugin.getCommand(commandName).setExecutor(this);

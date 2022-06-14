@@ -10,12 +10,6 @@ import org.bukkit.scheduler.BukkitRunnable;
  * Custom Scoreboards.
  */
 public class ScoreboardUpdate extends BukkitRunnable {
-    private final WoolWars plugin;
-
-    public ScoreboardUpdate(WoolWars plugin) {
-        this.plugin = plugin;
-    }
-
     @Override
     public void run() {
         for(Player player : Bukkit.getOnlinePlayers()) {
