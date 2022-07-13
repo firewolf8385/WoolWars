@@ -35,7 +35,7 @@ public class PlayerQuitListener implements Listener {
         // Remove the player from their party if one exists.
         Party party = plugin.getPartyManager().getParty(player);
         if(party != null) {
-            party.sendMessage("&aParty &8» &f" + player.getName() + " &adisconnected.");
+            party.sendMessage("&a&lParty &8» &f" + player.getName() + " &adisconnected.");
             party.removePlayer(player);
         }
 
